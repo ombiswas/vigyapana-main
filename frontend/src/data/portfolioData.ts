@@ -1,0 +1,238 @@
+export interface PortfolioProject {
+  slug: string;
+  title: string;
+  clientName: string;
+  industry: string;
+  category: 'NGO Fundraising' | 'Performance Marketing' | 'Web Development' | 'Branding';
+  tagline: string;
+  overview: string;
+  challenge: string;
+  solution: string;
+  coverImage: { url: string; alt?: string };
+  gallery: { url: string; caption?: string }[];
+  results: { metric: string; value: string; desc?: string }[];
+  technologies: string[];
+  testimonial?: {
+    quote: string;
+    authorName: string;
+    authorRole: string;
+  };
+}
+
+export const portfolioData: Record<string, PortfolioProject> = {
+  'hope-for-children-fundraising': {
+    slug: 'hope-for-children-fundraising',
+    title: '₹1.4 Cr Raised for Child Healthcare Campaign',
+    clientName: 'Hope For Children NGO',
+    industry: 'Healthcare & Child Welfare NGO',
+    category: 'NGO Fundraising',
+    tagline: 'Leveraged Google Ad Grants and Meta Donation Ads to drive 12,000+ individual donors.',
+    overview:
+      'Hope For Children is an Indian non-profit registered under 80G providing critical surgeries for underprivileged children. Vigyapana restructured their digital fundraising strategy, secured $10,000/mo in Google Ad Grants, and ran high-ROAS Meta donation ads.',
+    challenge:
+      'High donor acquisition costs and low monthly retention. Prior campaigns suffered from unoptimized landing pages that took over 6 seconds to load on mobile devices.',
+    solution:
+      'We designed a high-speed Next.js donation landing page with 1-click UPI and Razorpay checkout, optimized $10,000/mo in Google Search Ads, and launched Meta video ad creatives featuring real beneficiary stories.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Child Healthcare Campaign',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Mobile Donor Checkout Experience',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Beneficiary Impact Storyteller Ads',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb0?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Google Ad Grants Search Ad Extensions',
+      },
+    ],
+    results: [
+      { metric: 'Donations Raised', value: '₹1.4 Crores', desc: 'In 6 months of campaign management' },
+      { metric: 'Return on Ad Spend', value: '5.2x', desc: 'Net donor value vs paid ad spend' },
+      { metric: 'Total Donors', value: '12,400+', desc: 'Single and recurring monthly supporters' },
+      { metric: 'Checkout Speed', value: '0.8s', desc: 'Page load time on mobile devices' },
+    ],
+    technologies: ['Google Ad Grants', 'Meta Ads Manager', 'Next.js', 'Razorpay UPI', 'WhatsApp CAPI Integration'],
+    testimonial: {
+      quote:
+        'Vigyapana transformed our NGO fundraising completely. Their Google Ad Grants setup and Meta donation ads helped us raise over ₹1.4 Crores in 6 months. Unbelievable dedication!',
+      authorName: 'Ramesh Sharma',
+      authorRole: 'Executive Director, Hope For Children',
+    },
+  },
+
+  'aura-organic-performance-ads': {
+    slug: 'aura-organic-performance-ads',
+    title: '4.2x ROAS Scaling for D2C Organic Brand',
+    clientName: 'Aura Organic India',
+    industry: 'E-commerce & Skincare D2C',
+    category: 'Performance Marketing',
+    tagline: 'Restructured Meta ad account and deployed UGC video ads, scaling monthly revenue by 240%.',
+    overview:
+      'Aura Organic is a premium Indian D2C beauty brand. Vigyapana audited their ad account, introduced UGC (User-Generated Content) video ads, and set up dynamic catalog retargeting.',
+    challenge:
+      'Stagnant 1.4x ROAS on Meta ads with high customer acquisition costs (CAC) due to creative fatigue and basic audience targeting.',
+    solution:
+      'We produced 15 UGC video ad variations testing different hooks, implemented Meta Conversions API (CAPI), and created custom lookalike audiences from top 10% lifetime value customers.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80',
+      alt: 'D2C Skincare Scaling',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Ad Performance Dashboard',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80',
+        caption: 'UGC Video Ad Campaign Mockups',
+      },
+    ],
+    results: [
+      { metric: 'Blended ROAS', value: '4.2x', desc: 'Up from 1.4x baseline' },
+      { metric: 'Monthly Revenue', value: '+240%', desc: '60-day revenue acceleration' },
+      { metric: 'Cost Per Purchase', value: '-48%', desc: 'Reduction in acquisition cost' },
+    ],
+    technologies: ['Meta Ads Manager', 'Shopify Plus', 'Klaviyo Email Automation', 'Meta CAPI'],
+    testimonial: {
+      quote:
+        'Our e-commerce brand was struggling with 1.4x ROAS. Vigyapana reworked our creatives and scaled our ROAS to 4.2x in just 60 days.',
+      authorName: 'Priya Mehta',
+      authorRole: 'Co-Founder & CMO, Aura Organic',
+    },
+  },
+
+  'edureach-google-ad-grants': {
+    slug: 'edureach-google-ad-grants',
+    title: '$120K Annual Ad Grant Utilization for Education Trust',
+    clientName: 'EduReach Foundation',
+    industry: 'Education & Scholarship Non-Profit',
+    category: 'NGO Fundraising',
+    tagline: 'Achieved 98%+ Google Ad Grant budget utilization and generated 45,000+ organic site visits.',
+    overview:
+      'EduReach Foundation provides scholarships to underprivileged rural students. Vigyapana applied for and fully optimized their $10,000/month Google Ad Grant account.',
+    challenge:
+      'The non-profit had an inactive Ad Grant account due to policy non-compliance and keyword quality score drops under 5.',
+    solution:
+      'We audited 200+ keywords, removed single-word search terms, created responsive search ads with dynamic keyword insertion, and brought account CTR to 8.4%.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Education Scholarship Campaign',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Scholarship Application Portal',
+      },
+    ],
+    results: [
+      { metric: 'Ad Grant Budget', value: '$10,000/mo', desc: '100% free search ad funding' },
+      { metric: 'Monthly Clicks', value: '45,000+', desc: 'High-intent student and donor visits' },
+      { metric: 'Search CTR', value: '8.4%', desc: 'Well above Google 5% compliance rule' },
+    ],
+    technologies: ['Google Ads', 'Google Ad Grants', 'Google Analytics 4', 'WordPress CMS'],
+  },
+
+  'apex-healthtech-lead-gen': {
+    slug: 'apex-healthtech-lead-gen',
+    title: '350+ B2B Leads/Mo for Telehealth Platform',
+    clientName: 'Apex HealthTech',
+    industry: 'Healthcare & SaaS',
+    category: 'Performance Marketing',
+    tagline: 'Deployed Google Search and LinkedIn InMail ads targeting hospital admins and clinic owners.',
+    overview:
+      'Apex HealthTech provides AI-assisted clinic management software. Vigyapana designed a B2B lead generation funnel targeting hospital directors and private clinic doctors across tier-1 Indian cities.',
+    challenge:
+      'Extremely high cost-per-lead (CPL) on generic search terms and low conversion from booking requests to live demo calls.',
+    solution:
+      'We implemented Single Keyword Ad Groups (SKAGs) on Google Search and paired them with a interactive demo booking landing page built on Next.js.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Healthcare Telehealth Platform',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+        caption: 'B2B Demo Booking Interface',
+      },
+    ],
+    results: [
+      { metric: 'Qualified Leads', value: '350+/mo', desc: 'Verified clinic owners and hospital directors' },
+      { metric: 'Cost Per Lead', value: '-35%', desc: 'Significant CPL reduction' },
+      { metric: 'Demo Attendance', value: '78%', desc: 'Show-up rate for booked sales calls' },
+    ],
+    technologies: ['Google Ads', 'LinkedIn Ads', 'Next.js', 'HubSpot CRM Integration'],
+    testimonial: {
+      quote:
+        'Vigyapana understands B2B performance marketing better than any agency we’ve worked with in India. Weekly reporting and lead quality are exceptional.',
+      authorName: 'Vikramaditya Roy',
+      authorRole: 'VP Marketing, Apex HealthTech',
+    },
+  },
+
+  'greenearth-website-rebuild': {
+    slug: 'greenearth-website-rebuild',
+    title: 'High-Speed Next.js Web Platform for Climate NGO',
+    clientName: 'GreenEarth Foundation',
+    industry: 'Environmental Non-Profit',
+    category: 'Web Development',
+    tagline: 'Rebuilt legacy WordPress site into a sub-second loading React platform with automatic 80G receipts.',
+    overview:
+      'GreenEarth Foundation needed a modern, high-speed website to support their tree-planting donation drives across India.',
+    challenge:
+      'Old site crashed during viral social media drives and took 7.5 seconds to process UPI payments.',
+    solution:
+      'Vigyapana developed a high-performance Next.js website with Razorpay Smart Collect, enabling sub-second page loads and instant 80G tax receipt PDF downloads.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Climate NGO Web Platform',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Tree Donation Interactive Tracker',
+      },
+    ],
+    results: [
+      { metric: 'Page Speed Score', value: '99/100', desc: 'Google PageSpeed Insights' },
+      { metric: 'Load Time', value: '0.6s', desc: 'Sub-second mobile rendering' },
+      { metric: 'Checkout Conversion', value: '+65%', desc: 'Increase in completed donations' },
+    ],
+    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Razorpay API', 'PDFKit 80G Generator'],
+  },
+
+  'solis-solar-rebrand': {
+    slug: 'solis-solar-rebrand',
+    title: 'Brand Identity & Video Production for Solis Solar',
+    clientName: 'Solis Solar Systems',
+    industry: 'Clean Energy & Solar',
+    category: 'Branding',
+    tagline: 'Complete visual identity overhaul, logo design, and 4K commercial promo video for commercial rooftop solar.',
+    overview:
+      'Solis Solar needed a premium brand identity to compete for large commercial rooftop solar contracts across North India.',
+    challenge:
+      'Outdated brand identity failed to communicate engineering excellence to enterprise buyers.',
+    solution:
+      'We designed a modern logo, corporate style guide, and produced a 4K drone promo video highlighting their 50MW+ installed solar sites.',
+    coverImage: {
+      url: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Solar Energy Commercial Shoot',
+    },
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80',
+        caption: 'Solar Rooftop 4K Drone Shoot',
+      },
+    ],
+    results: [
+      { metric: 'Contract Pipeline', value: '₹18 Crores', desc: 'Enterprise solar project proposals' },
+      { metric: 'Video Views', value: '250,000+', desc: 'Across LinkedIn and YouTube' },
+    ],
+    technologies: ['Cinema Camera Shoot', 'Drone 4K Footage', 'Adobe Illustrator', 'After Effects Motion'],
+  },
+};

@@ -1,0 +1,22 @@
+export enum UserRole {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ADMIN = 'ADMIN',
+  CONTENT_MANAGER = 'CONTENT_MANAGER',
+  CLIENT = 'CLIENT',
+  GUEST = 'GUEST'
+}
+
+export enum ApplicationStatus {
+  PENDING = 'PENDING',
+  REVIEWING = 'REVIEWING',
+  SHORTLISTED = 'SHORTLISTED',
+  REJECTED = 'REJECTED',
+  HIRED = 'HIRED'
+}
+
+export enum SubmissionStatus {
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  RESOLVED = 'RESOLVED',
+  ARCHIVED = 'ARCHIVED'
+}
