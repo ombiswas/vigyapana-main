@@ -38,24 +38,24 @@ export const Footer: FC = () => {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-100 pt-20 pb-12 border-t border-slate-800/80 relative overflow-hidden">
+    <footer className="section-alt pt-20 pb-12 border-t section-alt-border relative overflow-hidden">
       {/* Background Glow Overlay */}
       <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-accent/10 blur-[120px] pointer-events-none" />
 
       <Container>
         {/* Top Newsletter CTA Banner */}
-        <div className="rounded-3xl bg-gradient-to-r from-primary/20 via-slate-900 to-accent/20 border border-slate-800 p-8 lg:p-12 mb-16 relative overflow-hidden backdrop-blur-xl shadow-2xl">
+        <div className="rounded-3xl bg-gradient-to-r from-primary/10 via-background to-accent/10 border section-alt-border p-8 lg:p-12 mb-16 relative overflow-hidden backdrop-blur-xl shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-semibold uppercase tracking-wider">
                 <Sparkles className="h-3.5 w-3.5" />
                 Vigyapana Insights
               </div>
-              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
                 Stay Ahead in Digital Growth & Fundraising
               </h3>
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Join 5,000+ NGO leaders and business founders receiving our monthly marketing breakdowns and donor conversion strategies.
               </p>
             </div>
@@ -74,7 +74,7 @@ export const Footer: FC = () => {
                     placeholder="Enter your work email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="flex-1 rounded-xl section-alt-input px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                   <Button type="submit" variant="accent" isLoading={loading} className="shrink-0">
                     Subscribe <Send className="h-4 w-4 ml-1" />
@@ -86,23 +86,23 @@ export const Footer: FC = () => {
         </div>
 
         {/* Main Footer Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b section-alt-border">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-2.5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-accent shadow-lg shadow-primary/30">
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
-              <span className="font-display text-2xl font-bold tracking-tight text-white">
+              <span className="font-display text-2xl font-bold tracking-tight text-foreground">
                 Vigyapana<span className="text-accent">.</span>
               </span>
             </Link>
 
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
               Vigyapana Services Pvt. Ltd. is India’s leading digital growth partner. We empower NGOs with high-ROI fundraising campaigns and help businesses scale through performance marketing.
             </p>
 
-            <div className="space-y-2.5 text-xs text-slate-300">
+            <div className="space-y-2.5 text-xs text-foreground/80">
               <div className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-accent shrink-0" />
                 <span>Noida, Uttar Pradesh / New Delhi, India</span>
@@ -124,10 +124,10 @@ export const Footer: FC = () => {
 
           {/* NGO Solutions */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white flex items-center gap-2">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground flex items-center gap-2">
               <HeartHandshake className="h-4 w-4 text-accent" /> NGO Solutions
             </h4>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm section-alt-muted">
               <li>
                 <Link to="/ngo-solutions#fundraising" className="hover:text-white transition-colors">
                   Fundraising Strategy
@@ -158,10 +158,10 @@ export const Footer: FC = () => {
 
           {/* Business Solutions */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Business Solutions
             </h4>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm section-alt-muted">
               <li>
                 <Link to="/business-solutions#performance" className="hover:text-white transition-colors">
                   Meta & Google Ads
@@ -192,10 +192,10 @@ export const Footer: FC = () => {
 
           {/* Company & Resources */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Company
             </h4>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm section-alt-muted">
               <li>
                 <Link to="/about" className="hover:text-white transition-colors">
                   About Vigyapana
@@ -226,7 +226,7 @@ export const Footer: FC = () => {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} Vigyapana Services Pvt. Ltd. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy-policy" className="hover:text-slate-300 transition-colors">

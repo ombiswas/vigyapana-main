@@ -26,7 +26,7 @@ const defaultStats: StatItem[] = [
 
 export const Counter: React.FC<CounterProps> = ({ stats = defaultStats, dark = false }) => {
   return (
-    <section className={`py-16 ${dark ? 'bg-slate-950 text-white' : 'bg-primary/5 text-foreground'} border-y border-border/60 relative`}>
+    <section className={`py-16 ${dark ? 'section-alt' : 'bg-primary/5 text-foreground'} border-y border-border/60 relative`}>
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, index) => (

@@ -1,98 +1,257 @@
 @import "tailwindcss";
 
+/* =========================================================
+   LIGHT MODE  — default (no class needed)
+   Orange (#F97316) primary + Blue (#2563EB) accent
+   ========================================================= */
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Surfaces */
+    --background:          30 30% 97%;          /* warm #F8F7F5 */
+    --foreground:          220 20% 10%;          /* near-black #141720 */
 
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
+    --card:                0 0% 100%;            /* pure white cards */
+    --card-foreground:     220 20% 10%;
 
-    --popover: 240 10% 4%;
-    --popover-foreground: 0 0% 98%;
+    --popover:             0 0% 100%;
+    --popover-foreground:  220 20% 10%;
 
-    --primary: 252 87% 67%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary — vivid orange */
+    --primary:             24 95% 53%;           /* #F97316 */
+    --primary-foreground:  0 0% 100%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary — soft warm grey */
+    --secondary:           30 14% 93%;           /* #EDE9E4 */
+    --secondary-foreground: 220 20% 18%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    /* Muted */
+    --muted:               30 12% 91%;           /* #EAE6E1 */
+    --muted-foreground:    220 10% 45%;          /* medium-warm grey */
 
-    --accent: 262 83% 58%;
-    --accent-foreground: 0 0% 98%;
+    /* Accent — rich blue */
+    --accent:              214 89% 52%;          /* #2563EB */
+    --accent-foreground:   0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    /* Status */
+    --destructive:         0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 252 87% 67%;
+    /* Chrome */
+    --border:              30 15% 86%;           /* warm light border */
+    --input:               30 15% 88%;
+    --ring:                24 95% 53%;           /* orange ring */
 
     --radius: 0.75rem;
+
+    /* Alternating section background (light = soft warm gray) */
+    --section-alt-bg:      30 20% 94%;          /* #EEE9E3 warm light gray */
+    --section-alt-fg:      220 20% 12%;          /* near-black text */
+    --section-alt-muted:   220 10% 40%;
+    --section-alt-border:  30 15% 84%;
+    --section-alt-card:    0 0% 100%;
+    --section-alt-input:   0 0% 97%;
+  }
+
+  /* =========================================================
+     DARK MODE  — applied via .dark class on <html>
+     Keeps the exact original dark palette — NOT changed.
+     ========================================================= */
+  .dark {
+    --background:          240 10% 3.9%;
+    --foreground:          0 0% 98%;
+
+    --card:                240 10% 6%;
+    --card-foreground:     0 0% 98%;
+
+    --popover:             240 10% 4%;
+    --popover-foreground:  0 0% 98%;
+
+    --primary:             252 87% 67%;
+    --primary-foreground:  0 0% 100%;
+
+    --secondary:           240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted:               240 3.7% 15.9%;
+    --muted-foreground:    240 5% 64.9%;
+
+    --accent:              262 83% 58%;
+    --accent-foreground:   0 0% 98%;
+
+    --destructive:         0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border:              240 3.7% 15.9%;
+    --input:               240 3.7% 15.9%;
+    --ring:                252 87% 67%;
+
+    /* Alternating section background (dark = slate-950) */
+    --section-alt-bg:      240 10% 3.9%;
+    --section-alt-fg:      0 0% 98%;
+    --section-alt-muted:   240 5% 64.9%;
+    --section-alt-border:  240 3.7% 15.9%;
+    --section-alt-card:    240 10% 6%;
+    --section-alt-input:   240 3.7% 12%;
   }
 }
 
+/* =========================================================
+   SECTION-ALT UTILITY  (replaces hardcoded bg-slate-950)
+   Light: warm gray · Dark: near-black (original)
+   ========================================================= */
+.section-alt {
+  background-color: hsl(var(--section-alt-bg));
+  color: hsl(var(--section-alt-fg));
+}
+.section-alt-border {
+  border-color: hsl(var(--section-alt-border));
+}
+.section-alt-card {
+  background-color: hsl(var(--section-alt-card));
+  border-color: hsl(var(--section-alt-border));
+}
+.section-alt-input {
+  background-color: hsl(var(--section-alt-input));
+  border-color: hsl(var(--section-alt-border));
+  color: hsl(var(--section-alt-fg));
+}
+.section-alt-muted {
+  color: hsl(var(--section-alt-muted));
+}
+
+/* =========================================================
+   BASE STYLES
+   ========================================================= */
 @layer base {
   * {
     border-color: hsl(var(--border));
   }
-  
+
   html {
-    color-scheme: dark;
+    color-scheme: light dark;
     scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  /* Dark html uses dark scheme */
+  html.dark {
+    color-scheme: dark;
   }
 
   body {
-    background-color: #08080a;
-    color: #f4f4f5;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     overflow-x: hidden;
-    selection-background-color: #6366f1;
-    selection-color: #ffffff;
+  }
+
+  /* Text selection */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+
+  .dark ::selection {
+    background-color: #6366f1;
+    color: #ffffff;
   }
 }
 
-/* Custom Glassmorphism & Aurora Glow Utility Classes */
+/* =========================================================
+   GLASS UTILITIES — theme-aware
+   ========================================================= */
+
+/* Light mode glass */
 .glass-panel {
-  background: rgba(18, 18, 24, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.07);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2);
+  border-color: hsl(24 95% 53% / 0.35);
+  box-shadow: 0 20px 40px -15px hsl(24 95% 53% / 0.18);
   transform: translateY(-4px);
 }
 
+/* Dark mode glass overrides */
+.dark .glass-panel {
+  background: rgba(18, 18, 24, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2);
+}
+
+/* =========================================================
+   GRADIENT TEXT UTILITIES — theme-aware
+   ========================================================= */
+
+/* Light: orange → blue gradient */
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #6366f1 100%);
+  background: linear-gradient(135deg, #ea6f0a 0%, #f97316 40%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .gradient-text-accent {
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark overrides */
+.dark .gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text-accent {
   background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+/* =========================================================
+   GLOW UTILITY
+   ========================================================= */
 .glow-purple {
   box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
 }
 
-/* Hide scrollbar for clean UI carousels */
+.dark .glow-purple {
+  box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
+}
+
+/* Light mode glow — orange */
+.glow-primary {
+  box-shadow: 0 0 50px -10px hsl(24 95% 53% / 0.25);
+}
+
+/* =========================================================
+   SCROLLBAR — hide for carousels
+   ========================================================= */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

@@ -46,7 +46,7 @@ const defaultSteps: TimelineStep[] = [
 ];
 
 export const Timeline: React.FC<TimelineProps> = ({
-  title = 'Our Proven Growth Methodology',
+  title = 'Our Proven Growth',
   badge = 'How We Work',
   description = 'A transparent 4-step framework engineered for maximum conversion, donor acquisition, and sustainable scaling.',
   steps = defaultSteps,
@@ -54,7 +54,13 @@ export const Timeline: React.FC<TimelineProps> = ({
   return (
     <section className="py-20 bg-background relative overflow-hidden">
       <Container>
-        <SectionHeading badge={badge} title={title} description={description} align="center" />
+        <SectionHeading
+          badge={badge}
+          title={title}
+          highlightedTitle="Methodology"
+          description={description}
+          align="center"
+        />
 
         <div className="relative mt-16 max-w-4xl mx-auto">
           {/* Vertical Center Line for Desktop */}

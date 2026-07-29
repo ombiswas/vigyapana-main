@@ -75,26 +75,22 @@ export const WhyChooseUs: FC = () => {
           {features.map((item, index) => {
             const Icon = item.icon;
             return (
+              // Motion shell: thin wrapper — only animates opacity + y. No GPU promotion.
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{
-                  duration: 0.5,
-                  delay: index * 0.08,
-                  ease: [0.21, 0.47, 0.32, 0.98],
+                  duration: 0.55,
+                  delay: index * 0.09,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
-                style={{
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  transform: 'translateZ(0)',
-                }}
-                className="group rounded-3xl border border-border/80 bg-card p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col justify-between transform-gpu will-change-[transform,opacity]"
               >
-                <div>
+                {/* Visual card: plain div — never promoted to its own GPU layer */}
+                <div className="group h-full rounded-3xl border border-border/80 bg-card p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col">
                   <div
-                    className={`h-14 w-14 rounded-2xl border flex items-center justify-center mb-6 ${item.color} shadow-sm transition-transform group-hover:scale-110 transform-gpu`}
+                    className={`h-14 w-14 rounded-2xl border flex items-center justify-center mb-6 ${item.color} shadow-sm transition-transform duration-300 group-hover:scale-110`}
                   >
                     <Icon className="h-7 w-7" />
                   </div>

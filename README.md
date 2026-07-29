@@ -1,7 +1,7 @@
 # Vigyapana Services Pvt. Ltd. — Platform Architecture & Project Documentation
 
 ## Executive Overview
-**Vigyapana Services Pvt. Ltd.** is an enterprise-grade digital marketing agency web platform and Headless Content Management System (CMS). Built with a modern MERN stack (MongoDB, Express.js 5, React 19, Node.js), TypeScript, Tailwind CSS, Lenis, GSAP, and Framer Motion, the platform is engineered for ultra-fast performance, cinema-grade motion aesthetics, robust security, and scalable lead capture.
+**Vigyapana Services Pvt. Ltd.** is an enterprise-grade digital marketing agency web platform and Headless Content Management System (CMS). Built with a modern MERN stack (MongoDB, Express.js 5, React 19, Node.js), TypeScript, Tailwind CSS, Lenis, GSAP, and Framer Motion, the platform is engineered for ultra-fast performance, cinema-grade motion aesthetics, robust security, and scalable lead capture. Features a **dual-theme design system**: a polished Light Mode (orange `#F97316` primary + blue `#2563EB` accent on warm `#F8F7F5` backgrounds) and the original Dark Mode (indigo/violet palette on `#08080a`), togglable via the Navbar icon with `localStorage` persistence.
 
 ---
 
@@ -196,6 +196,7 @@ npm run dev
 - Streamlined Navbar navigation by unifying redundant contact action buttons into a single high-impact "Contact Us" accent CTA button with icon styling.
 - Refactored home showcase section (**Signature Success Stories**) with dynamic ScrollTrigger width calculation, hardware-accelerated transforms (`transform-gpu`), and zero screen clipping.
 - Fixed Framer Motion card compositing layer flickering in **The Vigyapana Advantage** section with hardware backface isolation (`backfaceVisibility: hidden`).
-- Fixed sub-pixel bottom line blinking on image hover zoom in **Proven Case Studies** cards using 1% subpixel overflow scaling and `-bottom-px` gradient overlays.
+- Fixed sub-pixel bottom line flickering on image hover zoom in **Proven Case Studies** (`PortfolioCard.tsx`) cards: replaced the `h-[101%]/w-[101%]` overflow percentage hack (which left sub-pixel rendering seams) with `absolute inset-0 h-full w-full` image positioning; scoped `overflow-hidden` strictly to the image container (not the outer card) to eliminate GPU compositing conflicts caused by combining `overflow:hidden` with card-level transforms; applied `[will-change:transform]` to promote the image to its own compositing layer for flicker-free scale animations.
+- Refactored **Featured Works** horizontal scroll section (`HorizontalPortfolio.tsx`): changed GSAP ScrollTrigger `start` from `'top top'` to `'bottom bottom'` so pinning and horizontal scroll begins when the section's bottom edge reaches the viewport's bottom edge; redesigned portfolio cards with a cinematic dark glassmorphism aesthetic (ambient violet/cyan glow blobs, frosted glass category badge always legible over any image, metric stat tiles, per-card index number, deep gradient overlays, violet hover accents, and micro-animation arrow transitions).
 - Complete Admin CMS Dashboard with real-time analytics, lead intake manager, blog/portfolio/service CRUD operations, and media library.
 - Passed 100% of TypeScript type checks and Vite production build compilation with zero errors.

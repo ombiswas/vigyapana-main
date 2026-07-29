@@ -23,15 +23,16 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   tagline,
 }) => {
   return (
-    <div className="group relative rounded-3xl overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 transform-gpu [backface-visibility:hidden]">
-      {/* Background Cover Image */}
-      <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-card isolate transform-gpu [backface-visibility:hidden]">
+    <div className="group relative rounded-3xl border border-border/60 bg-card shadow-lg hover:shadow-2xl transition-shadow duration-500 transform-gpu">
+      {/* Image container — overflow-hidden scoped here only */}
+      <div className="relative h-64 sm:h-72 w-full rounded-t-3xl overflow-hidden">
         <img
           src={coverImage.url}
           alt={coverImage.alt ?? title}
-          className="h-[101%] w-[101%] -mt-[0.5%] -ml-[0.5%] object-cover transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu [backface-visibility:hidden]"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 [will-change:transform]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent pointer-events-none" />
+        {/* Gradient: fade to section-alt background */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--section-alt-bg))]/90 via-[hsl(var(--section-alt-bg))]/20 to-transparent pointer-events-none" />
 
         {industry && (
           <div className="absolute top-4 left-4 z-10">
@@ -42,8 +43,8 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
         )}
       </div>
 
-      {/* Content overlay */}
-      <div className="p-6 relative">
+      {/* Content */}
+      <div className="p-6">
         <div className="text-xs font-semibold uppercase tracking-wider text-accent mb-1">
           {clientName}
         </div>
@@ -51,7 +52,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
         <Link to={`/portfolio/${slug}`}>
           <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors flex items-center justify-between">
             <span>{title}</span>
-            <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+            <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0" />
           </h3>
         </Link>
 

@@ -157,7 +157,7 @@ export default function HomePage() {
       <Counter />
 
       {/* Infinite Marquee Ticker */}
-      <div className="py-6 bg-slate-950 border-y border-slate-800">
+      <div className="py-6 section-alt border-y section-alt-border">
         <MarqueeTicker items={marqueeTechStack} speed={30} />
       </div>
 
@@ -197,7 +197,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. Featured Portfolio & Case Studies */}
-      <section className="py-20 lg:py-28 bg-slate-950 text-white relative overflow-hidden">
+      <section className="py-20 lg:py-28 section-alt relative overflow-hidden">
         <div className="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-primary/10 blur-[140px] pointer-events-none" />
 
         <Container>
@@ -207,7 +207,6 @@ export default function HomePage() {
             highlightedTitle="Extraordinary Results."
             description="Take a look at how we helped non-profits raise crores in donations and enabled brands to outperform their competition."
             align="center"
-            dark
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
