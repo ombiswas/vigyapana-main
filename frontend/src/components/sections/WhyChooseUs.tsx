@@ -77,15 +77,24 @@ export const WhyChooseUs: FC = () => {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group rounded-3xl border border-border/80 bg-card p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col justify-between"
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
+                  ease: [0.21, 0.47, 0.32, 0.98],
+                }}
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                }}
+                className="group rounded-3xl border border-border/80 bg-card p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col justify-between transform-gpu will-change-[transform,opacity]"
               >
                 <div>
                   <div
-                    className={`h-14 w-14 rounded-2xl border flex items-center justify-center mb-6 ${item.color} shadow-sm transition-transform group-hover:scale-110`}
+                    className={`h-14 w-14 rounded-2xl border flex items-center justify-center mb-6 ${item.color} shadow-sm transition-transform group-hover:scale-110 transform-gpu`}
                   >
                     <Icon className="h-7 w-7" />
                   </div>

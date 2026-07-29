@@ -194,5 +194,8 @@ npm run dev
 - Integrated smart direction-aware auto-hiding and smooth scroll-reappearing Navbar behavior.
 - Integrated interactive Light/Dark Mode toggle icon button into the main Navbar with persistence in `localStorage`.
 - Streamlined Navbar navigation by unifying redundant contact action buttons into a single high-impact "Contact Us" accent CTA button with icon styling.
+- Refactored home showcase section (**Signature Success Stories**) with dynamic ScrollTrigger width calculation, hardware-accelerated transforms (`transform-gpu`), and zero screen clipping.
+- Fixed Framer Motion card compositing layer flickering in **The Vigyapana Advantage** section with hardware backface isolation (`backfaceVisibility: hidden`).
+- Fixed sub-pixel bottom line blinking on image hover zoom in **Proven Case Studies** cards using 1% subpixel overflow scaling and `-bottom-px` gradient overlays.
 - Complete Admin CMS Dashboard with real-time analytics, lead intake manager, blog/portfolio/service CRUD operations, and media library.
 - Passed 100% of TypeScript type checks and Vite production build compilation with zero errors.

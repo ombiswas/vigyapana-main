@@ -8,10 +8,10 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    // Auto-seed Initial Super Admin in Development if no users exist
-    const userCount = await User.countDocuments();
-    if (userCount === 0) {
-      await User.create({
+    // Auto-seed or Reset Super Admin Account
+    let adminUser = await User.findOne({ email: 'admin@vigyapana.com' }).select('+password');
+    if (!adminUser) {
+      adminUser = await User.create({
         name: 'Super Admin',
         email: 'admin@vigyapana.com',
         password: 'AdminPassword123!',
@@ -19,7 +19,17 @@ const startServer = async () => {
         isActive: true
       });
       console.log('----------------------------------------------------');
-      console.log('⚡ Initial Super Admin Seeded Successfully!');
+      console.log('⚡ Super Admin Account Seeded Successfully!');
+      console.log('   Email: admin@vigyapana.com');
+      console.log('   Password: AdminPassword123!');
+      console.log('----------------------------------------------------');
+    } else {
+      adminUser.password = 'AdminPassword123!';
+      adminUser.isActive = true;
+      adminUser.role = UserRole.SUPER_ADMIN;
+      await adminUser.save();
+      console.log('----------------------------------------------------');
+      console.log('⚡ Super Admin Account Verified & Reset!');
       console.log('   Email: admin@vigyapana.com');
       console.log('   Password: AdminPassword123!');
       console.log('----------------------------------------------------');

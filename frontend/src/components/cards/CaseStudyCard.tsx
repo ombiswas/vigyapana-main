@@ -25,12 +25,12 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
   industry,
 }) => {
   return (
-    <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-md hover:shadow-xl transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-      <div className="md:col-span-5 relative h-56 rounded-2xl overflow-hidden bg-muted">
+    <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-md hover:shadow-xl transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center transform-gpu [backface-visibility:hidden]">
+      <div className="md:col-span-5 relative h-56 rounded-2xl overflow-hidden bg-card isolate transform-gpu [backface-visibility:hidden]">
         <img
           src={coverImage.url}
           alt={coverImage.alt ?? title}
-          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          className="h-[101%] w-[101%] -mt-[0.5%] -ml-[0.5%] object-cover transition-transform duration-500 hover:scale-105 transform-gpu [backface-visibility:hidden]"
         />
         <div className="absolute top-3 left-3">
           <Badge variant="accent" className="shadow-md">

@@ -23,18 +23,18 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   tagline,
 }) => {
   return (
-    <div className="group relative rounded-3xl overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+    <div className="group relative rounded-3xl overflow-hidden border border-border/60 bg-card shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 transform-gpu [backface-visibility:hidden]">
       {/* Background Cover Image */}
-      <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-muted">
+      <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-card isolate transform-gpu [backface-visibility:hidden]">
         <img
           src={coverImage.url}
           alt={coverImage.alt ?? title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="h-[101%] w-[101%] -mt-[0.5%] -ml-[0.5%] object-cover transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu [backface-visibility:hidden]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent pointer-events-none" />
 
         {industry && (
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 z-10">
             <Badge variant="glass" className="capitalize text-xs">
               {industry.replace(/_/g, ' ')}
             </Badge>
