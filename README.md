@@ -101,10 +101,12 @@ The database strategy utilizes Mongoose 9 schemas with compound indexing, text i
 The website features an award-winning motion framework built with Lenis, GSAP, and Framer Motion:
 
 - **Lenis Smooth Scroll**: Virtual smooth scrolling with custom inertia physics.
+- **Smart Auto-Hiding Navbar**: Smooth direction-aware Navbar that slides out of view when scrolling down and reappears immediately when scrolling up or at top.
+- **Light / Dark Theme Engine**: Interactive light/dark mode icon toggle in the Navbar with persistence in `localStorage` and system theme detection.
 - **Glowing Mouse Follower**: Liquid cursor tracking pointer position with hover morphing.
 - **Kinetic Text Reveal**: Staggered word/line reveal animations with 3D perspective (`rotateX`).
 - **Curtain Image Reveal**: Scroll-triggered curtain wipes with scale reduction.
-- **Scroll Progress Bar**: Real-time top progress bar tracking scroll depth.
+- **Scroll Progress Bar**: Real-time `z-[100]` top edge progress line with instant 1-to-1 GPU scaleX scroll tracking (zero lag), which smoothly reveals when the main Navbar is hidden on scroll-down and hides when the Navbar is visible.
 - **Animated Counters**: Viewport-triggered counters for ROI statistics.
 - **Magnetic Buttons**: Magnetic cursor attraction physics on hover.
 - **Preloader Screen**: Percentage progress counter splash screen.
@@ -187,5 +189,8 @@ npm run dev
 ## 8. Summary of Completed Deliverables
 - Fully implemented enterprise Node.js/Express.js 5 backend with 14 Mongoose 9 models, dual JWT authentication, Cloudinary file uploads, and Nodemailer email notifications.
 - Integrated full frontend architecture with React 19, TypeScript, Tailwind CSS, Shadcn UI primitives, Lenis, GSAP, and Framer Motion.
+- Integrated smart direction-aware auto-hiding and smooth scroll-reappearing Navbar behavior.
+- Integrated interactive Light/Dark Mode toggle icon button into the main Navbar with persistence in `localStorage`.
+- Streamlined Navbar navigation by unifying redundant contact action buttons into a single high-impact "Contact Us" accent CTA button with icon styling.
 - Complete Admin CMS Dashboard with real-time analytics, lead intake manager, blog/portfolio/service CRUD operations, and media library.
 - Passed 100% of TypeScript type checks and Vite production build compilation with zero errors.

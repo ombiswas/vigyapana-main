@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -8,25 +8,48 @@ import {
   HeartHandshake,
   Layers,
   Menu,
+  Moon,
   PhoneCall,
   Sparkles,
+  Sun,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils';
+import { useThemeStore } from '@/stores/themeStore';
 
 export const Navbar: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const lastScrollY = useRef(0);
   const location = useLocation();
+  const { resolvedTheme, setTheme } = useThemeStore();
+
+  const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+
+      setIsScrolled(currentScrollY > 20);
+
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+      } else {
+        if (currentScrollY > lastScrollY.current + 5) {
+          setIsVisible(false);
+        } else if (currentScrollY < lastScrollY.current - 5) {
+          setIsVisible(true);
+        }
+      }
+
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -52,9 +75,10 @@ export const Navbar: FC = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out transform',
+        !isVisible && !mobileMenuOpen ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border/60 py-3 shadow-md'
+          ? 'bg-background/85 backdrop-blur-xl border-b border-border/60 py-3 shadow-md'
           : 'bg-transparent py-5'
       )}
     >
@@ -243,29 +267,53 @@ export const Navbar: FC = () => {
           </Link>
         </nav>
 
-        {/* Action Buttons */}
+        {/* Action Buttons & Theme Toggle */}
         <div className="hidden lg:flex items-center gap-3">
+          {/* Light/Dark Mode Icon Button */}
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border/80 bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 hover:border-accent/40 hover:text-accent transition-all duration-300"
+            aria-label="Toggle light and dark mode"
+            title={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {resolvedTheme === 'dark' ? (
+              <Sun className="h-4.5 w-4.5 text-accent transition-transform hover:rotate-45" />
+            ) : (
+              <Moon className="h-4.5 w-4.5 text-primary transition-transform hover:-rotate-12" />
+            )}
+          </button>
+
+          {/* Contact Us Button styled with accent style */}
           <Link to="/contact">
-            <Button variant="outline" size="sm">
+            <Button variant="accent" size="sm" className="shadow-md font-semibold">
+              <PhoneCall className="h-3.5 w-3.5 mr-1.5" />
               Contact Us
-            </Button>
-          </Link>
-          <Link to="/contact?type=book-consultation">
-            <Button variant="accent" size="sm" className="shadow-md">
-              <PhoneCall className="h-3.5 w-3.5 mr-1" />
-              Book Consultation
             </Button>
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        {/* Mobile Header Controls */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 transition-colors"
+            aria-label="Toggle light and dark mode"
+            title={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {resolvedTheme === 'dark' ? (
+              <Sun className="h-5 w-5 text-accent" />
+            ) : (
+              <Moon className="h-5 w-5 text-primary" />
+            )}
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </Container>
 
       {/* Mobile Drawer Menu */}
@@ -337,14 +385,10 @@ export const Navbar: FC = () => {
               </Link>
 
               <div className="pt-4 border-t border-border/60 flex flex-col gap-3 mt-2">
-                <Link to="/contact?type=ngo-audit" className="w-full">
-                  <Button variant="outline" className="w-full justify-center">
-                    Request Free NGO Audit
-                  </Button>
-                </Link>
-                <Link to="/contact?type=book-consultation" className="w-full">
-                  <Button variant="accent" className="w-full justify-center">
-                    Book Free Consultation
+                <Link to="/contact" className="w-full">
+                  <Button variant="accent" className="w-full justify-center font-semibold">
+                    <PhoneCall className="h-4 w-4 mr-2" />
+                    Contact Us
                   </Button>
                 </Link>
               </div>
@@ -355,3 +399,4 @@ export const Navbar: FC = () => {
     </header>
   );
 };
+
