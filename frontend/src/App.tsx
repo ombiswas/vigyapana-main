@@ -12,19 +12,21 @@ import AdminLayout from '@/layouts/AdminLayout';
 import { PageLoader } from '@/components/ui/PageLoader';
 
 // ── Lazy-loaded Public Pages ───────────────────────────────────────────────────
-const HomePage          = lazy(() => import('@/pages/public/HomePage'));
-const AboutPage         = lazy(() => import('@/pages/public/AboutPage'));
-const ServicesPage      = lazy(() => import('@/pages/public/ServicesPage'));
-const ServiceDetailPage = lazy(() => import('@/pages/public/ServiceDetailPage'));
-const PortfolioPage     = lazy(() => import('@/pages/public/PortfolioPage'));
-const PortfolioDetail   = lazy(() => import('@/pages/public/PortfolioDetailPage'));
-const CaseStudiesPage   = lazy(() => import('@/pages/public/CaseStudiesPage'));
-const CaseStudyDetail   = lazy(() => import('@/pages/public/CaseStudyDetailPage'));
-const BlogPage          = lazy(() => import('@/pages/public/BlogPage'));
-const BlogDetailPage    = lazy(() => import('@/pages/public/BlogDetailPage'));
-const CareerPage        = lazy(() => import('@/pages/public/CareerPage'));
-const ContactPage       = lazy(() => import('@/pages/public/ContactPage'));
-const NotFoundPage      = lazy(() => import('@/pages/public/NotFoundPage'));
+const HomePage             = lazy(() => import('@/pages/public/HomePage'));
+const AboutPage            = lazy(() => import('@/pages/public/AboutPage'));
+const NgoSolutionsPage     = lazy(() => import('@/pages/public/NgoSolutionsPage'));
+const BusinessSolutionsPage= lazy(() => import('@/pages/public/BusinessSolutionsPage'));
+const ServicesPage         = lazy(() => import('@/pages/public/ServicesPage'));
+const ServiceDetailPage    = lazy(() => import('@/pages/public/ServiceDetailPage'));
+const PortfolioPage        = lazy(() => import('@/pages/public/PortfolioPage'));
+const PortfolioDetail      = lazy(() => import('@/pages/public/PortfolioDetailPage'));
+const CaseStudiesPage      = lazy(() => import('@/pages/public/CaseStudiesPage'));
+const CaseStudyDetail      = lazy(() => import('@/pages/public/CaseStudyDetailPage'));
+const BlogPage             = lazy(() => import('@/pages/public/BlogPage'));
+const BlogDetailPage       = lazy(() => import('@/pages/public/BlogDetailPage'));
+const CareerPage           = lazy(() => import('@/pages/public/CareerPage'));
+const ContactPage          = lazy(() => import('@/pages/public/ContactPage'));
+const NotFoundPage         = lazy(() => import('@/pages/public/NotFoundPage'));
 
 // ── Lazy-loaded Auth Pages ─────────────────────────────────────────────────────
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
@@ -69,6 +71,8 @@ export default function App() {
                 <Route element={<PublicLayout />}>
                   <Route index                                  element={<HomePage />} />
                   <Route path={ROUTES.ABOUT}                   element={<AboutPage />} />
+                  <Route path={ROUTES.NGO_SOLUTIONS}           element={<NgoSolutionsPage />} />
+                  <Route path={ROUTES.BUSINESS_SOLUTIONS}      element={<BusinessSolutionsPage />} />
                   <Route path={ROUTES.SERVICES}                element={<ServicesPage />} />
                   <Route path={ROUTES.SERVICE_DETAIL}          element={<ServiceDetailPage />} />
                   <Route path={ROUTES.PORTFOLIO}               element={<PortfolioPage />} />

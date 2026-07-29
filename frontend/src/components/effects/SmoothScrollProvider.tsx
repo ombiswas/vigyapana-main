@@ -23,6 +23,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     });
 
     // Synchronize Lenis scroll position with GSAP ScrollTrigger
+    (window as any).__lenis = lenis;
     lenis.on('scroll', () => ScrollTrigger.update());
 
     const updateRaf = (time: number) => {
@@ -35,6 +36,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     return () => {
       gsap.ticker.remove(updateRaf);
       lenis.destroy();
+      delete (window as any).__lenis;
     };
   }, []);
 

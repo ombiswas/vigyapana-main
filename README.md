@@ -189,6 +189,8 @@ npm run dev
 ## 8. Summary of Completed Deliverables
 - Fully implemented enterprise Node.js/Express.js 5 backend with 14 Mongoose 9 models, dual JWT authentication, Cloudinary file uploads, and Nodemailer email notifications.
 - Integrated full frontend architecture with React 19, TypeScript, Tailwind CSS, Shadcn UI primitives, Lenis, GSAP, and Framer Motion.
+- Created dedicated, high-converting public landing pages for **NGO Solutions** (`/ngo-solutions`) and **Business Solutions** (`/business-solutions`) featuring section anchors (`#fundraising`, `#ad-grants`, `#meta-ads`, `#donor-journey`, `#performance`, `#web-dev`, `#social-media`, `#seo`), stats counters, case studies, and FAQs.
+- Integrated automated smooth scroll-to-top and Lenis scroll restoration component (`ScrollToTop.tsx`) whenever switching Navbar tabs or navigating routes.
 - Integrated smart direction-aware auto-hiding and smooth scroll-reappearing Navbar behavior.
 - Integrated interactive Light/Dark Mode toggle icon button into the main Navbar with persistence in `localStorage`.
 - Streamlined Navbar navigation by unifying redundant contact action buttons into a single high-impact "Contact Us" accent CTA button with icon styling.

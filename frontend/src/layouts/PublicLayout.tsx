@@ -6,10 +6,12 @@ import { ScrollProgressBar } from '@/components/effects/ScrollProgressBar';
 import { PreloaderScreen } from '@/components/effects/PreloaderScreen';
 import { MouseFollower } from '@/components/effects/MouseFollower';
 import { PageTransition } from '@/components/effects/PageTransition';
+import { ScrollToTop } from '@/components/common/ScrollToTop';
 
 export default function PublicLayout() {
   return (
     <SmoothScrollProvider>
+      <ScrollToTop />
       <PreloaderScreen />
       <MouseFollower />
       <ScrollProgressBar />

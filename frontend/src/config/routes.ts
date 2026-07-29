@@ -2,6 +2,8 @@
 export const ROUTES = {
   HOME:            '/',
   ABOUT:           '/about',
+  NGO_SOLUTIONS:   '/ngo-solutions',
+  BUSINESS_SOLUTIONS: '/business-solutions',
   SERVICES:        '/services',
   SERVICE_DETAIL:  '/services/:slug',
   PORTFOLIO:       '/portfolio',
