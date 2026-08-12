@@ -8,16 +8,13 @@ import {
   HeartHandshake,
   Layers,
   Menu,
-  Moon,
   PhoneCall,
   Sparkles,
-  Sun,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils';
-import { useThemeStore } from '@/stores/themeStore';
 
 export const Navbar: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,9 +23,7 @@ export const Navbar: FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const lastScrollY = useRef(0);
   const location = useLocation();
-  const { resolvedTheme, setTheme } = useThemeStore();
 
-  const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -267,23 +262,9 @@ export const Navbar: FC = () => {
           </Link>
         </nav>
 
-        {/* Action Buttons & Theme Toggle */}
+        {/* Action Buttons */}
         <div className="hidden lg:flex items-center gap-3">
-          {/* Light/Dark Mode Icon Button */}
-          <button
-            onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border/80 bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 hover:border-accent/40 hover:text-accent transition-all duration-300"
-            aria-label="Toggle light and dark mode"
-            title={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {resolvedTheme === 'dark' ? (
-              <Sun className="h-4.5 w-4.5 text-accent transition-transform hover:rotate-45" />
-            ) : (
-              <Moon className="h-4.5 w-4.5 text-primary transition-transform hover:-rotate-12" />
-            )}
-          </button>
-
-          {/* Contact Us Button styled with accent style */}
+          {/* Contact Us Button */}
           <Link to="/contact">
             <Button variant="accent" size="sm" className="shadow-md font-semibold">
               <PhoneCall className="h-3.5 w-3.5 mr-1.5" />
@@ -295,20 +276,8 @@ export const Navbar: FC = () => {
         {/* Mobile Header Controls */}
         <div className="flex items-center gap-2 lg:hidden">
           <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 transition-colors"
-            aria-label="Toggle light and dark mode"
-            title={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {resolvedTheme === 'dark' ? (
-              <Sun className="h-5 w-5 text-accent" />
-            ) : (
-              <Moon className="h-5 w-5 text-primary" />
-            )}
-          </button>
-          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-accent/10 transition-colors"
+            className="p-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm text-foreground hover:bg-primary/10 transition-colors"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

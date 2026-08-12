@@ -1,7 +1,6 @@
 import { type FC } from 'react';
-import { useThemeStore } from '@/stores/themeStore';
 import { useAuthStore } from '@/stores/authStore';
-import { ExternalLink, Menu, Moon, Sun } from 'lucide-react';
+import { ExternalLink, Menu } from 'lucide-react';
 import { Link } from 'react-router';
 
 interface AdminTopBarProps {
@@ -9,10 +8,7 @@ interface AdminTopBarProps {
 }
 
 export const AdminTopBar: FC<AdminTopBarProps> = ({ onToggleMobileSidebar }) => {
-  const { resolvedTheme, setTheme } = useThemeStore();
   const { user } = useAuthStore();
-
-  const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/80 bg-card/80 px-6 backdrop-blur-md">
@@ -38,15 +34,6 @@ export const AdminTopBar: FC<AdminTopBarProps> = ({ onToggleMobileSidebar }) => 
         >
           <ExternalLink className="h-3.5 w-3.5" /> View Public Website
         </Link>
-
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-background text-muted-foreground hover:text-foreground transition-colors"
-          title="Toggle Dark / Light Mode"
-        >
-          {resolvedTheme === 'dark' ? <Sun className="h-4 w-4 text-accent" /> : <Moon className="h-4 w-4" />}
-        </button>
 
         {/* User Pill */}
         <div className="hidden sm:flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs">

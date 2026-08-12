@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 /* =========================================================
-   LIGHT MODE  — default (no class needed)
-   Orange (#F97316) primary + Blue (#2563EB) accent
+   LIGHT MODE ONLY
+   Green (#07c893) primary · Dark (#202020) foreground · Near-white (#fdfdfd) background
    ========================================================= */
 @layer base {
   :root {
     /* Surfaces */
-    --background:          30 30% 97%;          /* warm #F8F7F5 */
-    --foreground:          220 20% 10%;          /* near-black #141720 */
+    --background:          0 0% 99%;            /* #fdfdfd */
+    --foreground:          0 0% 13%;            /* #202020 */
 
-    --card:                0 0% 100%;            /* pure white cards */
-    --card-foreground:     220 20% 10%;
+    --card:                0 0% 100%;           /* pure white cards */
+    --card-foreground:     0 0% 13%;
 
     --popover:             0 0% 100%;
-    --popover-foreground:  220 20% 10%;
+    --popover-foreground:  0 0% 13%;
 
-    /* Primary — vivid orange */
-    --primary:             24 95% 53%;           /* #F97316 */
+    /* Primary — brand green #07c893 */
+    --primary:             161 93% 40%;         /* #07c893 */
     --primary-foreground:  0 0% 100%;
 
-    /* Secondary — soft warm grey */
-    --secondary:           30 14% 93%;           /* #EDE9E4 */
-    --secondary-foreground: 220 20% 18%;
+    /* Secondary — soft green-tinted grey */
+    --secondary:           160 20% 94%;
+    --secondary-foreground: 0 0% 13%;
 
     /* Muted */
-    --muted:               30 12% 91%;           /* #EAE6E1 */
-    --muted-foreground:    220 10% 45%;          /* medium-warm grey */
+    --muted:               160 15% 92%;
+    --muted-foreground:    0 0% 42%;
 
-    /* Accent — rich blue */
-    --accent:              214 89% 52%;          /* #2563EB */
+    /* Accent — deeper green tint for contrast */
+    --accent:              161 80% 32%;         /* darker green #0a9e74 */
     --accent-foreground:   0 0% 100%;
 
     /* Status */
@@ -37,67 +37,24 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Chrome */
-    --border:              30 15% 86%;           /* warm light border */
-    --input:               30 15% 88%;
-    --ring:                24 95% 53%;           /* orange ring */
+    --border:              160 20% 87%;
+    --input:               160 20% 89%;
+    --ring:                161 93% 40%;         /* green ring */
 
     --radius: 0.75rem;
 
-    /* Alternating section background (light = soft warm gray) */
-    --section-alt-bg:      30 20% 94%;          /* #EEE9E3 warm light gray */
-    --section-alt-fg:      220 20% 12%;          /* near-black text */
-    --section-alt-muted:   220 10% 40%;
-    --section-alt-border:  30 15% 84%;
+    /* Alternating section background */
+    --section-alt-bg:      160 25% 96%;
+    --section-alt-fg:      0 0% 13%;
+    --section-alt-muted:   0 0% 42%;
+    --section-alt-border:  160 20% 85%;
     --section-alt-card:    0 0% 100%;
-    --section-alt-input:   0 0% 97%;
-  }
-
-  /* =========================================================
-     DARK MODE  — applied via .dark class on <html>
-     Keeps the exact original dark palette — NOT changed.
-     ========================================================= */
-  .dark {
-    --background:          240 10% 3.9%;
-    --foreground:          0 0% 98%;
-
-    --card:                240 10% 6%;
-    --card-foreground:     0 0% 98%;
-
-    --popover:             240 10% 4%;
-    --popover-foreground:  0 0% 98%;
-
-    --primary:             252 87% 67%;
-    --primary-foreground:  0 0% 100%;
-
-    --secondary:           240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted:               240 3.7% 15.9%;
-    --muted-foreground:    240 5% 64.9%;
-
-    --accent:              262 83% 58%;
-    --accent-foreground:   0 0% 98%;
-
-    --destructive:         0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border:              240 3.7% 15.9%;
-    --input:               240 3.7% 15.9%;
-    --ring:                252 87% 67%;
-
-    /* Alternating section background (dark = slate-950) */
-    --section-alt-bg:      240 10% 3.9%;
-    --section-alt-fg:      0 0% 98%;
-    --section-alt-muted:   240 5% 64.9%;
-    --section-alt-border:  240 3.7% 15.9%;
-    --section-alt-card:    240 10% 6%;
-    --section-alt-input:   240 3.7% 12%;
+    --section-alt-input:   0 0% 98%;
   }
 }
 
 /* =========================================================
-   SECTION-ALT UTILITY  (replaces hardcoded bg-slate-950)
-   Light: warm gray · Dark: near-black (original)
+   SECTION-ALT UTILITY
    ========================================================= */
 .section-alt {
   background-color: hsl(var(--section-alt-bg));
@@ -128,15 +85,10 @@
   }
 
   html {
-    color-scheme: light dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
       Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  /* Dark html uses dark scheme */
-  html.dark {
-    color-scheme: dark;
   }
 
   body {
@@ -147,106 +99,74 @@
 
   /* Text selection */
   ::selection {
-    background-color: hsl(var(--primary) / 0.25);
+    background-color: hsl(var(--primary) / 0.20);
     color: hsl(var(--foreground));
-  }
-
-  .dark ::selection {
-    background-color: #6366f1;
-    color: #ffffff;
   }
 }
 
 /* =========================================================
-   GLASS UTILITIES — theme-aware
+   GLASS UTILITIES
    ========================================================= */
 
-/* Light mode glass */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(253, 253, 253, 0.80);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(7, 200, 147, 0.12);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(253, 253, 253, 0.70) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(7, 200, 147, 0.15);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: hsl(24 95% 53% / 0.35);
-  box-shadow: 0 20px 40px -15px hsl(24 95% 53% / 0.18);
-  transform: translateY(-4px);
-}
-
-/* Dark mode glass overrides */
-.dark .glass-panel {
-  background: rgba(18, 18, 24, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.dark .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.dark .glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.2);
+  border-color: hsl(161 93% 40% / 0.30);
+  box-shadow: 0 8px 24px -8px hsl(161 93% 40% / 0.12);
+  transform: translateY(-2px);
 }
 
 /* =========================================================
-   GRADIENT TEXT UTILITIES — theme-aware
+   TYPOGRAPHY UTILITIES — DM Sans + Fraunces refinements
    ========================================================= */
 
-/* Light: orange → blue gradient */
+/* Body optical sizing for DM Sans */
+body {
+  font-optical-sizing: auto;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* =========================================================
+   GRADIENT TEXT UTILITIES
+   ========================================================= */
+
+/* Green → dark teal gradient */
 .gradient-text {
-  background: linear-gradient(135deg, #ea6f0a 0%, #f97316 40%, #2563eb 100%);
+  background: linear-gradient(135deg, #07c893 0%, #05a87a 50%, #202020 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-accent {
-  background: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #2563eb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Dark overrides */
-.dark .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.dark .gradient-text-accent {
-  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+  background: linear-gradient(135deg, #07c893 0%, #04d4a0 50%, #0a9e74 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* =========================================================
-   GLOW UTILITY
+   GLOW UTILITIES
    ========================================================= */
 .glow-purple {
-  box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 50px -10px hsl(161 93% 40% / 0.25);
 }
 
-.dark .glow-purple {
-  box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
-}
-
-/* Light mode glow — orange */
 .glow-primary {
-  box-shadow: 0 0 50px -10px hsl(24 95% 53% / 0.25);
+  box-shadow: 0 0 50px -10px hsl(161 93% 40% / 0.30);
 }
 
 /* =========================================================

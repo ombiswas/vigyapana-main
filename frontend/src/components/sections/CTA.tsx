@@ -1,7 +1,8 @@
 import type React from 'react';
+import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
-import { HeartHandshake, PhoneCall, Sparkles } from 'lucide-react';
+import { ArrowRight, HeartHandshake, PhoneCall } from 'lucide-react';
 import { Link } from 'react-router';
 
 export interface CTAProps {
@@ -15,51 +16,102 @@ export interface CTAProps {
 
 export const CTA: React.FC<CTAProps> = ({
   title = 'Ready to Scale Your NGO Donations or Business Revenue?',
-  subtitle = 'Schedule a complimentary strategy call with our digital growth team. We will audit your current campaigns and deliver an actionable 90-day roadmap.',
+  subtitle = "Schedule a complimentary strategy call with our digital growth team. We'll audit your current campaigns and deliver an actionable 90-day roadmap.",
   primaryCtaText = 'Book Free Consultation',
   primaryCtaLink = '/contact?type=book-consultation',
   secondaryCtaText = 'Request Free NGO Audit',
   secondaryCtaLink = '/contact?type=ngo-audit',
 }) => {
   return (
-    <section className="py-20 relative overflow-hidden bg-background">
+    <section className="py-24 lg:py-32 bg-background">
       <Container>
-        <div className="relative rounded-3xl bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 border border-slate-800 p-8 sm:p-12 lg:p-16 text-center text-white overflow-hidden shadow-2xl">
-          {/* Ambient Lighting Layers */}
-          <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-accent/20 blur-[100px] pointer-events-none" />
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative overflow-hidden rounded-3xl border border-border/60 bg-card shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]"
+        >
+          {/* Left accent bar */}
+          {/* <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" /> */}
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent uppercase tracking-wider">
-              <Sparkles className="h-3.5 w-3.5" />
-              Start Your Growth Journey
+          {/* Subtle inner tint — green top-left quadrant only */}
+          <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-primary/8 blur-[100px] pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-12 lg:p-16">
+
+            {/* Left: Text */}
+            <div className="lg:col-span-7 space-y-5">
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-primary/60" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
+                  Start Your Growth Journey
+                </span>
+              </div>
+
+              <h2 className="font-display text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-bold tracking-[-0.02em] text-foreground leading-[1.1]">
+                {title}
+              </h2>
+
+              <p className="text-base text-muted-foreground leading-[1.75] max-w-xl">
+                {subtitle}
+              </p>
+
+              {/* Trust signals */}
+              <ul className="flex flex-col sm:flex-row gap-3 sm:gap-6 pt-1">
+                {[
+                  'Free 30-minute strategy session',
+                  'Custom 90-day roadmap',
+                  'No obligation required',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-[13px] text-foreground/70 font-medium">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              {title}
-            </h2>
-
-            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* Right: Actions */}
+            <div className="lg:col-span-5 flex flex-col gap-3">
               <Link to={primaryCtaLink}>
-                <Button variant="accent" size="lg" className="w-full sm:w-auto shadow-xl shadow-accent/20">
-                  <PhoneCall className="h-4 w-4 mr-2" />
-                  {primaryCtaText}
+                <Button
+                  variant="default"
+                  size="lg"
+                  className="w-full justify-between group"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <PhoneCall className="h-4 w-4" />
+                    {primaryCtaText}
+                  </span>
+                  <ArrowRight className="h-4 w-4 opacity-60 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
 
               <Link to={secondaryCtaLink}>
-                <Button variant="glass" size="lg" className="w-full sm:w-auto">
-                  <HeartHandshake className="h-4 w-4 mr-2 text-accent" />
-                  {secondaryCtaText}
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full justify-between group border-border/60 hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <HeartHandshake className="h-4 w-4" />
+                    {secondaryCtaText}
+                  </span>
+                  <ArrowRight className="h-4 w-4 opacity-60 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
+
+              <p className="text-[11px] text-muted-foreground text-center mt-1 leading-relaxed">
+                Trusted by 120+ NGOs & brands across India.{' '}
+                <Link to="/case-studies" className="text-primary hover:underline underline-offset-2">
+                  See results →
+                </Link>
+              </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

@@ -166,7 +166,9 @@ export default function HomePage() {
 
       {/* 4. Featured Services Grid */}
       <section className="py-20 lg:py-28 bg-background relative overflow-hidden">
-        <Container>
+        {/* Greenish gradient background starting from center and spreading outside */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[750px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.14)_0%,hsl(161_93%_40%/0.04)_45%,transparent_70%)] pointer-events-none" />
+        <Container className="relative z-10">
           <SectionHeading
             badge="Our Capabilities"
             title="End-to-End Digital Solutions Tailored for"
@@ -175,20 +177,20 @@ export default function HomePage() {
             align="center"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {featuredServices.map((service) => (
-              <ServiceCard key={service.slug} {...service} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {featuredServices.map((service, idx) => (
+              <ServiceCard key={service.slug} {...service} index={idx} />
             ))}
           </div>
 
-          <div className="mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link to="/services">
-              <Button variant="default" size="lg" className="shadow-lg">
+              <Button variant="default" size="lg">
                 View All Services <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>
             <Link to="/ngo-solutions">
-              <Button variant="outline" size="lg" className="border-accent/40 text-accent hover:bg-accent/10">
+              <Button variant="outline" size="lg">
                 <HeartHandshake className="h-4 w-4 mr-2" /> NGO Specific Packages
               </Button>
             </Link>
@@ -198,8 +200,6 @@ export default function HomePage() {
 
       {/* 5. Featured Portfolio & Case Studies */}
       <section className="py-20 lg:py-28 section-alt relative overflow-hidden">
-        <div className="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-primary/10 blur-[140px] pointer-events-none" />
-
         <Container>
           <SectionHeading
             badge="Proven Case Studies"
@@ -209,7 +209,7 @@ export default function HomePage() {
             align="center"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {featuredPortfolios.map((portfolio) => (
               <PortfolioCard key={portfolio.slug} {...portfolio} />
             ))}
@@ -217,7 +217,7 @@ export default function HomePage() {
 
           <div className="mt-12 text-center">
             <Link to="/portfolio">
-              <Button variant="accent" size="lg" className="shadow-xl">
+              <Button variant="accent" size="lg">
                 Explore Complete Portfolio <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>

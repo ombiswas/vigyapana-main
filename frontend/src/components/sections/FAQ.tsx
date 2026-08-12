@@ -59,7 +59,7 @@ export const FAQ: React.FC<FAQProps> = ({
       <Container size="sm">
         <SectionHeading badge={badge} title={title} description={description} align="center" />
 
-        <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-xl">
+        <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
           <Accordion type="single" collapsible className="w-full">
             {items.map((item, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`}>

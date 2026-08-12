@@ -1,7 +1,6 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -26,16 +25,16 @@ const config: Config = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81'
+          50: '#e6faf5',
+          100: '#b3f0e0',
+          200: '#80e6cb',
+          300: '#4ddcb6',
+          400: '#1ad2a1',
+          500: '#07c893',
+          600: '#05a87a',
+          700: '#048862',
+          800: '#036849',
+          900: '#024831'
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -68,8 +67,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Outfit', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
         mono: ['Fira Code', 'monospace']
       },
       keyframes: {

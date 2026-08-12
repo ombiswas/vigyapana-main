@@ -79,7 +79,7 @@ export const Carousel: FC<CarouselProps> = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="rounded-3xl border border-border/80 bg-card p-8 sm:p-12 shadow-xl relative"
+              className="rounded-3xl border border-border/80 bg-card p-8 sm:p-12 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] relative"
             >
               <Quote className="h-12 w-12 text-primary/20 absolute top-6 right-8 pointer-events-none" />
 
@@ -123,9 +123,8 @@ export const Carousel: FC<CarouselProps> = ({
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    idx === currentIndex ? 'w-8 bg-primary' : 'w-2.5 bg-muted-foreground/30 hover:bg-muted-foreground'
-                  }`}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-8 bg-primary' : 'w-2.5 bg-muted-foreground/30 hover:bg-muted-foreground'
+                    }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

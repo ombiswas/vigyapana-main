@@ -23,7 +23,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   tagline,
 }) => {
   return (
-    <div className="group relative rounded-3xl border border-border/60 bg-card shadow-lg hover:shadow-2xl transition-shadow duration-500 transform-gpu">
+    <div className="group relative rounded-3xl border border-border/60 bg-card shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-shadow duration-500 transform-gpu">
       {/* Image container — overflow-hidden scoped here only */}
       <div className="relative h-64 sm:h-72 w-full rounded-t-3xl overflow-hidden">
         <img

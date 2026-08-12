@@ -78,13 +78,12 @@ export const Timeline: React.FC<TimelineProps> = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`flex flex-col md:flex-row items-center gap-8 ${
-                    isEven ? 'md:flex-row-reverse' : ''
-                  }`}
+                  className={`flex flex-col md:flex-row items-center gap-8 ${isEven ? 'md:flex-row-reverse' : ''
+                    }`}
                 >
                   {/* Step Content Card */}
                   <div className="w-full md:w-1/2">
-                    <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-lg hover:border-primary/40 transition-colors">
+                    <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:border-primary/40 transition-colors">
                       <div className="flex items-center gap-3 mb-3">
                         <span className="font-display text-2xl font-black text-accent">
                           {step.number}

@@ -28,7 +28,7 @@ export const AgencyIntro: FC = () => {
             <Sparkles className="h-3.5 w-3.5" />
             Who We Are
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{color:'hsl(var(--section-alt-fg))' as string}}>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ color: 'hsl(var(--section-alt-fg))' as string }}>
             India&apos;s Leading Digital Growth Agency Designed for Dual Impact
           </h2>
           <p className="section-alt-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
@@ -42,11 +42,10 @@ export const AgencyIntro: FC = () => {
           <div className="flex items-center justify-center gap-4 mb-10">
             <button
               onClick={() => setActiveTab('ngo')}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-display text-sm font-bold transition-all duration-300 ${
-                activeTab === 'ngo'
+              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-display text-sm font-bold transition-all duration-300 ${activeTab === 'ngo'
                   ? 'bg-accent text-white shadow-lg shadow-accent/25 scale-105'
                   : 'bg-background text-muted-foreground border border-border hover:text-foreground hover:bg-muted'
-              }`}
+                }`}
             >
               <HeartHandshake className="h-5 w-5" />
               <span>For NGOs & Non-Profits</span>
@@ -54,11 +53,10 @@ export const AgencyIntro: FC = () => {
 
             <button
               onClick={() => setActiveTab('business')}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-display text-sm font-bold transition-all duration-300 ${
-                activeTab === 'business'
+              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-display text-sm font-bold transition-all duration-300 ${activeTab === 'business'
                   ? 'bg-primary text-white shadow-lg shadow-primary/25 scale-105'
                   : 'bg-background text-muted-foreground border border-border hover:text-foreground hover:bg-muted'
-              }`}
+                }`}
             >
               <Briefcase className="h-5 w-5" />
               <span>For Businesses & Brands</span>
@@ -72,7 +70,7 @@ export const AgencyIntro: FC = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="rounded-3xl section-alt-card bg-background/90 p-8 sm:p-12 shadow-2xl backdrop-blur-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border"
+              className="rounded-3xl section-alt-card bg-background/90 p-8 sm:p-12 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] backdrop-blur-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border"
             >
               <div className="lg:col-span-7 space-y-5">
                 <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">

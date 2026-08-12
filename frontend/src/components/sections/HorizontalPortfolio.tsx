@@ -1,166 +1,243 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { portfolioData } from '@/data/portfolioData';
-import { ArrowUpRight, TrendingUp } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
+import { cn } from '@/lib/utils';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const CARD_HEIGHT = 520; // px — consistent card height
+const AUTO_INTERVAL = 5500;
+const CARD_H = 480;
 
 export function HorizontalPortfolio() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
   const projects = Object.values(portfolioData);
+  const total = projects.length;
 
+  const [index, setIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hovering = useRef(false);
+
+  // Measure visible count on screen resize
   useEffect(() => {
-    const track = trackRef.current;
-    const section = sectionRef.current;
-    if (!track || !section) return;
-
-    // Wait one frame so layout is fully measured
-    const raf = requestAnimationFrame(() => {
-      const getScrollAmount = () => {
-        return -(track.scrollWidth - window.innerWidth + 160);
-      };
-
-      const ctx = gsap.context(() => {
-        gsap.to(track, {
-          x: getScrollAmount,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            // Pin starts when the section's bottom hits the viewport bottom
-            start: 'bottom bottom',
-            end: () => `+=${Math.abs(getScrollAmount()) + 200}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-      });
-
-      return () => ctx.revert();
-    });
-
-    return () => cancelAnimationFrame(raf);
+    const updateCount = () => {
+      if (window.innerWidth < 640) setVisibleCount(1);
+      else if (window.innerWidth < 1024) setVisibleCount(2);
+      else setVisibleCount(3);
+    };
+    updateCount();
+    window.addEventListener('resize', updateCount);
+    return () => window.removeEventListener('resize', updateCount);
   }, []);
 
+  const maxIndex = Math.max(0, total - visibleCount);
+
+  const stopTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const startTimer = useCallback(() => {
+    stopTimer();
+    timerRef.current = setInterval(() => {
+      if (!hovering.current) {
+        setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+      }
+    }, AUTO_INTERVAL);
+  }, [maxIndex]);
+
+  const next = useCallback(() => {
+    setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  }, [maxIndex]);
+
+  const prev = useCallback(() => {
+    setIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    startTimer();
+    return stopTimer;
+  }, [startTimer]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') { prev(); startTimer(); }
+      if (e.key === 'ArrowRight') { next(); startTimer(); }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [prev, next, startTimer]);
+
+  // Calculate sliding percentage and gap offset dynamically
+  // Gap is 20px (gap-5)
+  const cardShiftPercent = 100 / visibleCount;
+  const cardShiftGapPx = 20 / visibleCount;
+  const translateX = `calc(-${index * cardShiftPercent}% - ${index * cardShiftGapPx}px)`;
+
   return (
-    // NOTE: No overflow-hidden on section — GSAP pin spacer must not be clipped
-    <section
-      ref={sectionRef}
-      className="section-alt relative"
-      style={{ minHeight: '100svh' }}
-    >
-      {/* Ambient glow */}
+    <section className="section-alt relative overflow-hidden py-24 lg:py-32">
+      {/* Ambient background glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
         style={{
-          width: 900,
-          height: 600,
-          borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(79,70,229,0.12) 0%, transparent 70%)',
+          background:
+            'radial-gradient(ellipse 80% 40% at 50% -10%, hsl(161 93% 40% / 0.05) 0%, transparent 70%)',
         }}
       />
 
-      {/* Section heading */}
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-14">
-        <SectionHeading
-          badge="Featured Works"
-          title="Signature Success"
-          highlightedTitle="Stories"
-          description="Explore our highest-performing digital campaigns driving measurable ROI for NGOs and commercial brands."
-          align="center"
-        />
-      </div>
+      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        {/* Header + nav row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+          <SectionHeading
+            badge="Featured Works"
+            title="Signature Success"
+            highlightedTitle="Stories"
+            description="Our highest-performing campaigns driving measurable ROI."
+            align="left"
+            className="mb-0 max-w-xl"
+          />
 
-      {/* Cards track — overflow-hidden only here, not on section */}
-      <div className="overflow-hidden w-full pb-20">
-        <div
-          ref={trackRef}
-          className="flex items-center gap-6 w-max px-10 sm:px-16 md:px-24 will-change-transform transform-gpu"
-        >
-          {projects.map((project, idx) => (
-            <div
-              key={project.slug}
-              className="relative shrink-0 rounded-2xl overflow-hidden"
-              style={{ width: 360, height: CARD_HEIGHT }}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Numeric counter */}
+            <span className="mr-1 text-[11px] font-semibold tabular-nums tracking-widest text-muted-foreground select-none">
+              <span className="text-foreground font-bold">{String(index + 1).padStart(2, '0')}</span>
+              <span className="mx-1">/</span>
+              {String(total).padStart(2, '0')}
+            </span>
+
+            <button
+              onClick={() => { prev(); startTimer(); }}
+              aria-label="Previous project"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-card text-foreground transition-all duration-200 hover:border-foreground/30 hover:bg-foreground/5 active:scale-95"
             >
-              {/* Full-bleed image */}
-              <img
-                src={project.coverImage.url}
-                alt={project.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{ willChange: 'transform' }}
-              />
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => { next(); startTimer(); }}
+              aria-label="Next project"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-card text-foreground transition-all duration-200 hover:border-foreground/30 hover:bg-foreground/5 active:scale-95"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
 
-              {/* Top-to-bottom dark vignette for readability */}
+        {/* Outer clip container for horizontal track */}
+        <div className="overflow-hidden w-full pb-4">
+          <motion.div
+            className="flex gap-5 will-change-transform"
+            animate={{ x: translateX }}
+            transition={{
+              duration: 0.65,
+              ease: [0.25, 1, 0.5, 1], // Smooth fluid cubic-bezier slide curve
+            }}
+          >
+            {projects.map((project, idx) => (
               <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.92) 100%)',
-                }}
-              />
-
-              {/* Top row */}
-              <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
-                <span className="text-[11px] font-black tracking-[0.3em] text-white/40 uppercase">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <span className="inline-flex items-center rounded-full border border-white/25 bg-black/40 backdrop-blur-md px-3 py-1 text-[11px] font-semibold text-white tracking-wide">
-                  {project.category}
-                </span>
-              </div>
-
-              {/* Bottom content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-                {/* Client name */}
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/55 mb-2">
-                  {project.clientName}
-                </p>
-
-                {/* Title */}
-                <h3 className="font-display text-xl font-bold text-white leading-snug line-clamp-2 mb-3">
-                  {project.title}
-                </h3>
-
-                {/* Key metric */}
-                {project.results?.[0] && (
-                  <div className="flex items-center gap-2 mb-5">
-                    <TrendingUp className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                    <span className="text-sm font-black text-emerald-400">
-                      {project.results[0].value}
-                    </span>
-                    <span className="text-xs text-white/50 font-medium">
-                      {project.results[0].metric}
-                    </span>
-                  </div>
+                key={project.slug}
+                className={cn(
+                  'group relative shrink-0 overflow-hidden rounded-2xl border border-border/60',
+                  'w-full sm:w-[calc((100%-20px)/2)] lg:w-[calc((100%-40px)/3)]',
+                  'shadow-[0_2px_10px_-4px_rgba(0,0,0,0.06)] transition-all duration-300',
+                  'hover:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.18)] hover:border-primary/30'
                 )}
+                style={{ height: CARD_H }}
+                onMouseEnter={() => { hovering.current = true; }}
+                onMouseLeave={() => { hovering.current = false; }}
+              >
+                {/* Photo */}
+                <img
+                  src={project.coverImage.url}
+                  alt={project.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  draggable={false}
+                />
 
-                {/* CTA link */}
+                {/* Vignette */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 35%, rgba(0,0,0,0.6) 62%, rgba(0,0,0,0.94) 100%)',
+                  }}
+                />
+
+                {/* Top row */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                  <span className="text-[10px] font-black tracking-[0.3em] text-white/35 uppercase select-none">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <span className="inline-flex rounded-full border border-white/20 bg-black/45 backdrop-blur-sm px-3 py-1 text-[11px] font-semibold text-white/80 tracking-wide">
+                    {project.category}
+                  </span>
+                </div>
+
+                {/* Bottom content */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/45 mb-1.5 truncate">
+                    {project.clientName}
+                  </p>
+
+                  <h3 className="font-display text-[1.12rem] font-bold text-white leading-snug line-clamp-2 mb-3">
+                    {project.title}
+                  </h3>
+
+                  {project.results?.[0] && (
+                    <div className="flex items-center gap-1.5 mb-3.5">
+                      <TrendingUp className="h-3.5 w-3.5 text-primary shrink-0" />
+                      <span className="text-[0.85rem] font-black text-primary tabular-nums">
+                        {project.results[0].value}
+                      </span>
+                      <span className="text-xs text-white/45 font-medium truncate">
+                        {project.results[0].metric}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="h-px bg-white/10 mb-3.5" />
+
+                  <Link
+                    to={`/portfolio/${project.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white transition-colors duration-200 group/cta"
+                  >
+                    View Case Study
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
+                  </Link>
+                </div>
+
+                {/* Card hit target */}
                 <Link
                   to={`/portfolio/${project.slug}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-white/70 hover:text-white transition-colors duration-300 group"
-                >
-                  View Case Study
-                  <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-                </Link>
+                  aria-label={project.title}
+                  className="absolute inset-0 rounded-2xl"
+                  tabIndex={-1}
+                />
               </div>
+            ))}
+          </motion.div>
+        </div>
 
-              {/* Hover ring overlay — separate element so scale doesn't affect it */}
-              <Link
-                to={`/portfolio/${project.slug}`}
-                aria-label={project.title}
-                className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 hover:ring-white/30 transition-all duration-500 group"
-                tabIndex={-1}
-              />
-            </div>
+        {/* Dot progress */}
+        <div className="flex items-center justify-center gap-2 mt-8" role="tablist">
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={i === index}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => {
+                setIndex(i);
+                startTimer();
+              }}
+              className={cn(
+                'rounded-full transition-all duration-300 ease-out',
+                i === index
+                  ? 'w-5 h-1.5 bg-foreground'
+                  : 'w-1.5 h-1.5 bg-border hover:bg-foreground/40'
+              )}
+            />
           ))}
         </div>
       </div>

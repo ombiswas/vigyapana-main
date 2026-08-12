@@ -32,20 +32,25 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       {...props}
     >
       {badge && (
-        <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-accent mb-4 shadow-sm backdrop-blur-sm">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-          {badge}
+        <div className="flex items-center gap-2.5 mb-4">
+          {align !== 'right' && <div className="h-px w-6 bg-primary/50" />}
+          <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
+            {badge}
+          </span>
+          {align !== 'left' && align !== 'center' && <div className="h-px w-6 bg-primary/50" />}
         </div>
       )}
       <h2
         className={cn(
-          'font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl leading-[1.15]',
+          'font-display font-bold',
+          'text-[1.85rem] sm:text-[2.2rem] lg:text-[2.6rem]',
+          'tracking-[-0.02em] leading-[1.1]',
           dark ? 'text-white' : 'text-foreground'
         )}
       >
         {title}{' '}
         {highlightedTitle && (
-          <span className="bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
+          <span className="text-primary">
             {highlightedTitle}
           </span>
         )}
@@ -53,8 +58,8 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       {description && (
         <p
           className={cn(
-            'mt-4 text-base sm:text-lg leading-relaxed max-w-2xl',
-            dark ? 'text-gray-300' : 'text-muted-foreground'
+            'mt-4 text-base leading-[1.75] max-w-2xl font-sans font-normal',
+            dark ? 'text-white/60' : 'text-muted-foreground'
           )}
         >
           {description}
