@@ -10,7 +10,6 @@ import { ConsultationForm } from '@/components/forms/ConsultationForm';
 import { Modal, ModalContent, ModalHeader, ModalTitle, ModalTrigger } from '@/components/ui/Modal';
 import {
   Briefcase,
-  CheckCircle2,
   Clock,
   HeartHandshake,
   Mail,
@@ -19,22 +18,11 @@ import {
   Phone,
   Sparkles,
 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { cn } from '@/lib/utils';
 
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState<'contact' | 'ngo-audit'>('contact');
   const [consultModalOpen, setConsultModalOpen] = useState(false);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newsletterEmail) {
-      setSubscribed(true);
-      toast.success('Successfully subscribed to Vigyapana Newsletter!');
-      setNewsletterEmail('');
-    }
-  };
 
   return (
     <>
@@ -46,29 +34,30 @@ export default function ContactPage() {
         />
       </Helmet>
 
-      {/* Hero Section */}
+      {/* ── 1. Hero Section ────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 bg-background overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary/20 via-accent/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+        {/* Soft green radial background glow from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.12)_0%,hsl(161_93%_40%/0.03)_45%,transparent_70%)] pointer-events-none" />
 
-        <Container>
+        <Container className="relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary uppercase tracking-wider">
               <Sparkles className="h-3.5 w-3.5" />
-              Let’s Connect
+              Let’s Connect & Scale
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.15]">
-              Let&apos;s Build Your <span className="bg-gradient-to-r from-accent via-amber-500 to-orange-500 bg-clip-text text-transparent">Digital Growth</span> Engine.
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+              Let&apos;s Build Your <span className="text-primary">Digital Growth</span> Engine.
             </h1>
 
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-sans">
               Have questions about NGO fundraising, Google Ad Grants, or performance ads? Our strategists are ready to help.
             </p>
 
             <div className="pt-2">
               <Modal open={consultModalOpen} onOpenChange={setConsultModalOpen}>
                 <ModalTrigger asChild>
-                  <Button variant="accent" size="lg" className="shadow-xl">
+                  <Button variant="default" size="lg" className="shadow-md">
                     <Phone className="h-4 w-4 mr-2" /> Book 1-on-1 Strategy Call
                   </Button>
                 </ModalTrigger>
@@ -84,98 +73,100 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* Main Contact Grid: Info Cards + Interactive Form */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
+      {/* ── 2. Main Contact Grid (Light Mode) ─────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-t border-border/70 relative overflow-hidden">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Left: Contact Info Cards & Map */}
+            {/* Left Column: Direct Touchpoint Cards */}
             <div className="lg:col-span-5 space-y-6">
               <SectionHeading
                 badge="Direct Touchpoints"
                 title="Get in Touch with Our Team"
+                description="Connect directly with our media buyers, technical leads, and NGO audit team."
                 align="left"
-                dark
               />
 
               <div className="space-y-4">
                 {/* Office Location */}
-                <Card className="glass-card-dark border-slate-800 p-6 flex items-start gap-4 text-slate-100 shadow-xl">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/20 text-primary">
+                <div className="group rounded-2xl border border-border/80 bg-background p-6 flex items-start gap-4 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.1)] hover:border-primary/30 transition-all duration-300">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <MapPin className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-white">Noida HQ Office</h3>
-                    <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                    <h3 className="font-display text-base font-bold text-foreground">Noida HQ Office</h3>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed font-sans">
                       Plot B-14, Sector 62, Institutional Area, Noida, NCR, Uttar Pradesh 201309, India
                     </p>
                   </div>
-                </Card>
+                </div>
 
                 {/* Direct WhatsApp & Phone */}
-                <Card className="glass-card-dark border-slate-800 p-6 flex items-start gap-4 text-slate-100 shadow-xl">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <div className="group rounded-2xl border border-border/80 bg-background p-6 flex items-start gap-4 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.1)] hover:border-primary/30 transition-all duration-300">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <MessageSquare className="h-6 w-6" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-display text-lg font-bold text-white">WhatsApp & Direct Phone</h3>
-                    <p className="text-xs text-slate-300">+91 98765 43210 / +91 120 4567890</p>
+                    <h3 className="font-display text-base font-bold text-foreground">WhatsApp & Direct Phone</h3>
+                    <p className="text-xs text-muted-foreground font-sans">+91 98765 43210 / +91 120 4567890</p>
                     <a
                       href="https://wa.me/919876543210?text=Hello%20Vigyapana%20Team,%20I%20would%20like%20to%20discuss%20a%20digital%20growth%20project."
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-accent hover:underline pt-1"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/75 transition-colors pt-1"
                     >
                       Chat on WhatsApp Now &rarr;
                     </a>
                   </div>
-                </Card>
+                </div>
 
                 {/* Email Support */}
-                <Card className="glass-card-dark border-slate-800 p-6 flex items-start gap-4 text-slate-100 shadow-xl">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent/20 text-accent">
+                <div className="group rounded-2xl border border-border/80 bg-background p-6 flex items-start gap-4 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.1)] hover:border-primary/30 transition-all duration-300">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Mail className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-white">Email Inquiries</h3>
-                    <p className="text-xs text-slate-300 mt-1">info@vigyapana.com / support@vigyapana.com</p>
+                    <h3 className="font-display text-base font-bold text-foreground">Email Inquiries</h3>
+                    <p className="text-xs text-muted-foreground mt-1 font-sans">info@vigyapana.com / support@vigyapana.com</p>
                   </div>
-                </Card>
+                </div>
 
                 {/* Business Hours */}
-                <Card className="glass-card-dark border-slate-800 p-6 flex items-start gap-4 text-slate-100 shadow-xl">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-500/20 text-indigo-400">
+                <div className="group rounded-2xl border border-border/80 bg-background p-6 flex items-start gap-4 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.1)] hover:border-primary/30 transition-all duration-300">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Clock className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-white">Operating Hours</h3>
-                    <p className="text-xs text-slate-300 mt-1">Monday – Saturday: 9:30 AM – 7:00 PM IST</p>
+                    <h3 className="font-display text-base font-bold text-foreground">Operating Hours</h3>
+                    <p className="text-xs text-muted-foreground mt-1 font-sans">Monday – Saturday: 9:30 AM – 7:00 PM IST</p>
                   </div>
-                </Card>
+                </div>
               </div>
             </div>
 
-            {/* Right: Interactive Form with Tab Switcher */}
+            {/* Right Column: Interactive Form with Tab Switcher */}
             <div className="lg:col-span-7">
-              <Card className="glass-card-dark border-slate-800 p-8 sm:p-10 shadow-2xl text-slate-100 space-y-6">
-                {/* Form Switcher */}
-                <div className="flex items-center gap-3 p-1.5 rounded-2xl bg-slate-900 border border-slate-800">
+              <div className="rounded-2xl border border-border/90 bg-background p-8 sm:p-10 shadow-[0_4px_24px_-6px_rgba(0,0,0,0.06)] space-y-6">
+                {/* Form Tab Switcher */}
+                <div className="flex items-center gap-2 p-1.5 rounded-xl bg-muted border border-border/80">
                   <button
                     onClick={() => setActiveTab('contact')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    className={cn(
+                      'flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all',
                       activeTab === 'contact'
-                        ? 'bg-primary text-white shadow-md'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
+                        ? 'bg-primary text-white shadow-sm font-bold'
+                        : 'text-muted-foreground hover:text-foreground font-semibold'
+                    )}
                   >
                     <Briefcase className="h-4 w-4" /> Business & General Inquiry
                   </button>
                   <button
                     onClick={() => setActiveTab('ngo-audit')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    className={cn(
+                      'flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all',
                       activeTab === 'ngo-audit'
-                        ? 'bg-accent text-slate-950 shadow-md'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
+                        ? 'bg-primary text-white shadow-sm font-bold'
+                        : 'text-muted-foreground hover:text-foreground font-semibold'
+                    )}
                   >
                     <HeartHandshake className="h-4 w-4" /> Free 80G NGO Growth Audit
                   </button>
@@ -184,8 +175,8 @@ export default function ContactPage() {
                 {activeTab === 'contact' ? (
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-display text-2xl font-bold text-white">Send Us a Message</h3>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <h3 className="font-display text-2xl font-bold text-foreground">Send Us a Message</h3>
+                      <p className="text-xs text-muted-foreground mt-1 font-sans">
                         Fill out the details below. Our team responds to all inquiries within 2 business hours.
                       </p>
                     </div>
@@ -194,30 +185,31 @@ export default function ContactPage() {
                 ) : (
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-display text-2xl font-bold text-white">Request Free NGO Audit</h3>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <h3 className="font-display text-2xl font-bold text-foreground">Request Free NGO Audit</h3>
+                      <p className="text-xs text-muted-foreground mt-1 font-sans">
                         We will evaluate your 80G compliance, Google Ad Grants eligibility, and donor conversion pages.
                       </p>
                     </div>
                     <NgoAuditForm />
                   </div>
                 )}
-              </Card>
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Embedded Google Map Section */}
-      <section className="py-16 bg-background relative border-y border-border/60">
+      {/* ── 3. Embedded Google Map Section ───────────────────────────────────── */}
+      <section className="py-16 bg-background relative border-t border-border/70">
         <Container>
           <SectionHeading
             badge="Visit Our HQ"
             title="Office Location & Directions"
+            description="Located in Sector 62 Institutional Area, Noida — at the heart of Delhi NCR’s digital hub."
             align="center"
           />
 
-          <div className="mt-8 rounded-3xl overflow-hidden border border-border shadow-2xl h-[420px] bg-muted relative">
+          <div className="mt-8 rounded-2xl overflow-hidden border border-border/90 shadow-[0_4px_24px_-6px_rgba(0,0,0,0.06)] h-[420px] bg-muted relative">
             <iframe
               title="Vigyapana Services HQ Map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.56209806894!2d77.36214531508216!3d28.61287798242502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5456e36d715%3A0x2649b5c391307!2sSector%2062%2C%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
@@ -228,47 +220,6 @@ export default function ContactPage() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-          </div>
-        </Container>
-      </section>
-
-      {/* Newsletter Subscription Block */}
-      <section className="py-20 bg-slate-950 text-white relative">
-        <Container size="sm">
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-8 sm:p-12 text-center space-y-6 shadow-2xl backdrop-blur-xl">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/20 text-accent mx-auto">
-              <Mail className="h-7 w-7" />
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
-                Subscribe to Our Weekly Growth Dispatch
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
-                No spam. Only actionable Google Ad Grants strategies, Meta ad benchmarks, and web engineering updates.
-              </p>
-            </div>
-
-            {subscribed ? (
-              <div className="inline-flex items-center gap-2 p-4 rounded-2xl bg-emerald-500/20 text-emerald-400 text-sm font-semibold border border-emerald-500/40">
-                <CheckCircle2 className="h-5 w-5" />
-                You are subscribed! We will send you our next digital growth release.
-              </div>
-            ) : (
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address..."
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <Button type="submit" variant="accent" className="shrink-0">
-                  Subscribe
-                </Button>
-              </form>
-            )}
           </div>
         </Container>
       </section>

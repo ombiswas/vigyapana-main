@@ -16,9 +16,6 @@ import {
   Palette,
   Rocket,
   Search,
-  ShieldCheck,
-  Sparkles,
-  TrendingUp,
 } from 'lucide-react';
 
 export default function BusinessSolutionsPage() {
@@ -160,33 +157,34 @@ export default function BusinessSolutionsPage() {
         />
       </Helmet>
 
-      {/* Hero Section */}
+      {/* ── 1. Hero Section ────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-background overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary/20 via-indigo-500/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+        {/* Soft green radial background glow from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.12)_0%,hsl(161_93%_40%/0.03)_45%,transparent_70%)] pointer-events-none" />
 
-        <Container>
+        <Container className="relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary uppercase tracking-wider">
               <Briefcase className="h-4 w-4" />
               Corporate & Commercial Growth Engine
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.15]">
-              Performance Marketing & Digital Infrastructure to <span className="bg-gradient-to-r from-primary via-indigo-500 to-purple-500 bg-clip-text text-transparent">Scale Revenue Fast</span>.
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+              Performance Marketing & Digital Infrastructure to <span className="text-primary">Scale Revenue Fast</span>.
             </h1>
 
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto font-sans">
               We engineer high-ROAS Meta & Google ad campaigns, build high-speed web platforms, generate verified high-ticket leads, and elevate brand authority.
             </p>
 
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <Link to="/contact?type=book-consultation">
-                <Button variant="default" size="lg" className="shadow-xl font-semibold">
+                <Button variant="default" size="lg" className="shadow-md font-semibold">
                   <Rocket className="h-4.5 w-4.5 mr-2" /> Book Free Strategy Call
                 </Button>
               </Link>
-              <Link to="/portfolio">
-                <Button variant="outline" size="lg" className="shadow-lg">
+              <Link to="/about#portfolio">
+                <Button variant="outline" size="lg" className="border-border/80 hover:border-primary/40 hover:text-primary">
                   Explore Work <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
@@ -194,62 +192,61 @@ export default function BusinessSolutionsPage() {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-3xl border border-border/80 bg-card/60 backdrop-blur-xl shadow-2xl">
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl border border-border/80 bg-card shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
             {stats.map((item) => (
               <div key={item.label} className="text-center p-4">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground font-display">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground font-display tabular-nums">
                   {item.value}
                 </div>
                 <div className="text-xs sm:text-sm font-bold text-primary mt-1">{item.label}</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5">{item.detail}</div>
+                <div className="text-[11px] text-muted-foreground font-semibold mt-0.5">{item.detail}</div>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Core Business Solutions Grid */}
-      <section className="py-20 md:py-28 bg-slate-950 text-white relative">
+      {/* ── 2. Core Business Solutions Grid (Light Mode) ───────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-t border-border/70 relative overflow-hidden">
         <Container>
           <SectionHeading
             badge="Full-Stack Capabilities"
             title="Commercial Growth Verticals"
             description="Explore our specialized services tailored for D2C brands, B2B enterprises, real estate developers, and startups."
             align="center"
-            dark
           />
 
-          <div className="mt-16 space-y-16">
+          <div className="mt-16 space-y-12">
             {businessSolutionsList.map((sol) => {
               const IconComp = sol.icon;
               return (
                 <div
                   key={sol.id}
                   id={sol.id}
-                  className="scroll-mt-32 p-8 md:p-12 rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-primary/40"
+                  className="scroll-mt-32 p-8 md:p-12 rounded-2xl border border-border/80 bg-background shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:border-primary/30 transition-all duration-300"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
                     <div className="space-y-4 max-w-2xl">
                       <div className="flex items-center gap-3">
-                        <div className="p-3 rounded-2xl bg-primary/15 border border-primary/30 text-primary">
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary">
                           <IconComp className="h-6 w-6" />
                         </div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                           {sol.badge}
                         </span>
                       </div>
 
-                      <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground">
                         {sol.title}
                       </h3>
 
-                      <p className="text-slate-300 leading-relaxed text-base">
+                      <p className="text-muted-foreground leading-relaxed text-base font-sans">
                         {sol.description}
                       </p>
 
                       <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {sol.highlights.map((item) => (
-                          <div key={item} className="flex items-center gap-2 text-sm text-slate-200">
+                          <div key={item} className="flex items-center gap-2 text-sm text-foreground font-medium">
                             <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
                             <span>{item}</span>
                           </div>
@@ -257,15 +254,15 @@ export default function BusinessSolutionsPage() {
                       </div>
                     </div>
 
-                    <div className="lg:w-80 shrink-0 p-6 rounded-2xl border border-slate-800 bg-slate-950/80 space-y-4 text-center">
-                      <div className="text-xs uppercase font-semibold tracking-wider text-slate-400">
+                    <div className="lg:w-80 shrink-0 p-6 rounded-xl border border-border/80 bg-card space-y-4 text-center shadow-sm">
+                      <div className="text-[10px] uppercase font-bold tracking-[0.14em] text-muted-foreground">
                         Proven Verified Impact
                       </div>
-                      <div className="text-sm font-bold text-primary leading-snug">
+                      <div className="text-sm font-bold text-primary leading-snug font-sans">
                         {sol.impactMetric}
                       </div>
                       <Link to="/contact?type=book-consultation" className="block w-full">
-                        <Button variant="default" size="sm" className="w-full justify-center">
+                        <Button variant="default" size="sm" className="w-full justify-center shadow-sm">
                           Get Custom Proposal
                         </Button>
                       </Link>
@@ -278,8 +275,8 @@ export default function BusinessSolutionsPage() {
         </Container>
       </section>
 
-      {/* Commercial Case Studies */}
-      <section className="py-20 md:py-28 bg-background relative">
+      {/* ── 3. Commercial Case Studies ────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-background relative">
         <Container>
           <SectionHeading
             badge="Proven Case Studies"
@@ -292,23 +289,23 @@ export default function BusinessSolutionsPage() {
             {caseStudies.map((cs) => (
               <div
                 key={cs.title}
-                className="rounded-3xl border border-border/80 bg-card p-6 shadow-xl space-y-4 flex flex-col justify-between"
+                className="rounded-2xl border border-border/80 bg-card p-6 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:border-primary/30 transition-all duration-300 space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
-                  <div className="text-xs font-semibold text-primary uppercase tracking-wider">
+                  <div className="text-[10px] font-bold text-primary uppercase tracking-[0.14em]">
                     {cs.category}
                   </div>
                   <h4 className="font-display text-xl font-bold text-foreground">{cs.title}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{cs.summary}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed font-sans">{cs.summary}</p>
                 </div>
 
-                <div className="pt-4 border-t border-border/60 grid grid-cols-2 gap-2 text-center bg-muted/30 p-3 rounded-2xl">
+                <div className="pt-4 border-t border-border/60 grid grid-cols-2 gap-2 text-center bg-muted/40 p-3 rounded-xl">
                   <div>
-                    <div className="text-xs text-muted-foreground">{cs.metric1Label}</div>
+                    <div className="text-[10px] text-muted-foreground font-semibold uppercase">{cs.metric1Label}</div>
                     <div className="text-base font-extrabold text-foreground">{cs.metric1Val}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-muted-foreground">{cs.metric2Label}</div>
+                    <div className="text-[10px] text-muted-foreground font-semibold uppercase">{cs.metric2Label}</div>
                     <div className="text-base font-extrabold text-primary">{cs.metric2Val}</div>
                   </div>
                 </div>
@@ -318,7 +315,7 @@ export default function BusinessSolutionsPage() {
 
           <div className="mt-12 text-center">
             <Link to="/case-studies">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="border-border/80 hover:border-primary/40 hover:text-primary">
                 View All Case Studies <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>
@@ -326,35 +323,35 @@ export default function BusinessSolutionsPage() {
         </Container>
       </section>
 
-      {/* FAQs */}
-      <section className="py-20 bg-slate-950 text-white border-t border-slate-800">
+      {/* ── 4. FAQs ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-t border-border/80 relative">
         <Container>
           <SectionHeading
             badge="Frequently Asked Questions"
             title="Everything You Need to Know About Business Scaling"
+            description="Clear answers about launch timelines, target channels, and performance tracking."
             align="center"
-            dark
           />
 
           <div className="mt-12 max-w-3xl mx-auto space-y-4">
             {faqs.map((faq, idx) => (
               <div
                 key={faq.q}
-                className="rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden"
+                className="rounded-xl border border-border/80 bg-background overflow-hidden shadow-sm hover:border-primary/30 transition-colors"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full px-6 py-4 text-left font-semibold text-white flex items-center justify-between gap-4 hover:bg-slate-800/50 transition-colors"
+                  className="w-full px-6 py-4 text-left font-semibold text-foreground flex items-center justify-between gap-4 hover:bg-muted/40 transition-colors"
                 >
-                  <span>{faq.q}</span>
+                  <span className="font-display text-base">{faq.q}</span>
                   {openFaq === idx ? (
                     <ChevronUp className="h-5 w-5 text-primary shrink-0" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-400 shrink-0" />
+                    <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />
                   )}
                 </button>
                 {openFaq === idx && (
-                  <div className="px-6 pb-5 pt-1 text-sm text-slate-300 border-t border-slate-800/60 leading-relaxed">
+                  <div className="px-6 pb-5 pt-1 text-sm text-muted-foreground border-t border-border/60 leading-relaxed font-sans">
                     {faq.a}
                   </div>
                 )}
@@ -364,7 +361,7 @@ export default function BusinessSolutionsPage() {
         </Container>
       </section>
 
-      {/* CTA */}
+      {/* ── 5. CTA ────────────────────────────────────────────────────────────── */}
       <CTA
         title="Ready to Accelerate Your Commercial Revenue?"
         subtitle="Schedule a free strategy consultation with our growth team. We will analyze your acquisition funnel and deliver a 90-day scaling roadmap."

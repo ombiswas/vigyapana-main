@@ -231,15 +231,6 @@ export const Navbar: FC = () => {
             </AnimatePresence>
           </div>
 
-          <Link
-            to="/portfolio"
-            className={cn(
-              'px-3.5 py-2 text-sm font-medium rounded-lg transition-colors hover:text-primary hover:bg-primary/5',
-              location.pathname.startsWith('/portfolio') ? 'text-primary font-semibold bg-primary/5' : 'text-foreground/80'
-            )}
-          >
-            Portfolio
-          </Link>
 
           <Link
             to="/case-studies"
@@ -327,12 +318,6 @@ export const Navbar: FC = () => {
               >
                 <Layers className="h-4 w-4 text-primary" />
                 All Services
-              </Link>
-              <Link
-                to="/portfolio"
-                className="px-4 py-3 rounded-xl font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                Portfolio & Work
               </Link>
               <Link
                 to="/case-studies"

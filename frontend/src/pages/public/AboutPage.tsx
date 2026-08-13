@@ -1,14 +1,21 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
+import { PortfolioCard } from '@/components/cards/PortfolioCard';
 import { CTA } from '@/components/sections/CTA';
+import { portfolioData } from '@/data/portfolioData';
 import {
+  ArrowRight,
+  Briefcase,
+  CheckCircle2,
   HeartHandshake,
   Lightbulb,
   Linkedin,
   Rocket,
+  Search,
   ShieldCheck,
   Sparkles,
   Target,
@@ -16,6 +23,7 @@ import {
   Twitter,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { cn } from '@/lib/utils';
 
 // Realistic Company Milestones Data
 const companyMilestones = [
@@ -70,7 +78,7 @@ const coreValues = [
   },
 ];
 
-// Realistic Team Preview Data
+// Realistic Team Data
 const teamMembers = [
   {
     name: 'Om Biswas',
@@ -104,7 +112,7 @@ const teamMembers = [
   },
 ];
 
-// Realistic Office & Culture Gallery
+// Realistic Office Gallery
 const officeImages = [
   {
     url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
@@ -125,61 +133,94 @@ const officeImages = [
 ];
 
 export default function AboutPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const portfolioList = Object.values(portfolioData);
+  const categories = ['All', 'NGO Fundraising', 'Performance Marketing', 'Web Development', 'Branding'];
+
+  const filteredProjects = portfolioList.filter((project) => {
+    const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory;
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.industry.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
     <>
       <Helmet>
-        <title>About Us | Vigyapana Services Pvt. Ltd.</title>
+        <title>About Us & Portfolio | Vigyapana Services Pvt. Ltd.</title>
         <meta
           name="description"
-          content="Learn about Vigyapana Services - India's leading digital growth agency empowering NGOs through Google Ad Grants & fundraising campaigns, and driving performance ads for growing brands."
+          content="Learn about Vigyapana Services - India's premier purpose-driven digital growth agency. Explore our story, leadership, and complete portfolio of proven campaigns raising ₹50Cr+ for NGOs and delivering 3.8x+ ROAS."
         />
       </Helmet>
 
-      {/* 1. Hero Section */}
+      {/* ── 1. Hero Section ────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-background overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary/20 via-accent/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+        {/* Soft greenish radial background glow from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.12)_0%,hsl(161_93%_40%/0.03)_45%,transparent_70%)] pointer-events-none" />
 
-        <Container>
+        <Container className="relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary uppercase tracking-wider">
               <Sparkles className="h-3.5 w-3.5" />
-              Our Story & Purpose
+              Our Story, Purpose & Track Record
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.15]">
-              We Exist to Scale <span className="bg-gradient-to-r from-accent via-amber-500 to-orange-500 bg-clip-text text-transparent">Social Impact</span> & Accelerate{' '}
-              <span className="bg-gradient-to-r from-primary via-indigo-500 to-purple-500 bg-clip-text text-transparent">Commercial Revenue</span>.
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+              We Exist to Scale <span className="text-primary">Social Impact</span> & Accelerate{' '}
+              <span className="text-foreground">Commercial Growth</span>.
             </h1>
 
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Vigyapana Services Pvt. Ltd. is a full-service performance marketing agency headquartered in NCR, India. We combine data science, ad engineering, and creative storytelling to help non-profits and brands thrive.
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-sans">
+              Vigyapana Services Pvt. Ltd. is a premier digital growth agency headquartered in NCR, India. We unite ad performance engineering, Google Ad Grants management, and conversion web development to drive real ROI.
             </p>
+
+            {/* Quick Stat Pill Bar */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-foreground">
+              <div className="flex items-center gap-2 bg-card border border-border/80 px-4 py-2 rounded-2xl shadow-sm">
+                <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
+                <span><strong>₹50 Cr+</strong> Raised for NGOs</span>
+              </div>
+              <div className="flex items-center gap-2 bg-card border border-border/80 px-4 py-2 rounded-2xl shadow-sm">
+                <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
+                <span><strong>3.8x+ Avg ROAS</strong> Paid Ad Campaigns</span>
+              </div>
+              <div className="flex items-center gap-2 bg-card border border-border/80 px-4 py-2 rounded-2xl shadow-sm">
+                <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
+                <span><strong>$10,000/mo</strong> Ad Grants Allocation</span>
+              </div>
+            </div>
 
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <Link to="/contact">
-                <Button variant="accent" size="lg" className="shadow-xl">
+                <Button variant="default" size="lg" className="shadow-md">
                   Work With Us <Rocket className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
-              <Link to="/portfolio">
-                <Button variant="outline" size="lg">
-                  View Our Portfolio
+              <a href="#portfolio">
+                <Button variant="outline" size="lg" className="border-border/80 hover:border-primary/40 hover:text-primary">
+                  Explore Case Studies <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 2. Company Story, Mission & Vision */}
-      <section className="py-20 bg-card border-y border-border/60 relative overflow-hidden">
+      {/* ── 2. Company Story, Mission & Vision ─────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-y border-border/70 relative overflow-hidden">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Story Text */}
+            {/* Left Story Text */}
             <div className="lg:col-span-6 space-y-6">
-              <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+                <span className="h-2 w-2 rounded-full bg-primary" />
                 Founded on Purpose
-              </span>
+              </div>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground leading-tight">
                 How Vigyapana Became India’s Trusted Growth Partner
               </h2>
@@ -190,23 +231,23 @@ export default function AboutPage() {
                 We built a dual-specialization agency model. On one side, we help Indian 80G non-profits secure $10,000/mo in free Google Search Ads and scale donor acquisitions. On the other side, we engineer performance ad campaigns for D2C brands, healthcare, and tech enterprises.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <div className="p-4 rounded-2xl bg-background border border-border/80">
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="p-5 rounded-2xl bg-background border border-border/80 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
                   <div className="font-display text-2xl font-bold text-primary">₹50 Cr+</div>
-                  <div className="text-xs text-muted-foreground mt-1">Donations Raised for NGOs</div>
+                  <div className="text-xs text-muted-foreground mt-1">Donations Raised for Indian NGOs</div>
                 </div>
-                <div className="p-4 rounded-2xl bg-background border border-border/80">
-                  <div className="font-display text-2xl font-bold text-accent">3.8x Avg</div>
-                  <div className="text-xs text-muted-foreground mt-1">ROAS for Businesses</div>
+                <div className="p-5 rounded-2xl bg-background border border-border/80 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
+                  <div className="font-display text-2xl font-bold text-foreground">3.8x Avg</div>
+                  <div className="text-xs text-muted-foreground mt-1">ROAS for E-commerce & B2B</div>
                 </div>
               </div>
             </div>
 
-            {/* Mission & Vision Cards */}
+            {/* Right Mission & Vision Cards */}
             <div className="lg:col-span-6 space-y-6">
-              <div className="rounded-3xl border border-primary/30 bg-primary/5 p-8 relative overflow-hidden shadow-lg">
+              <div className="rounded-3xl border border-primary/30 bg-primary/5 p-8 relative overflow-hidden shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-white font-bold">
                     <HeartHandshake className="h-5 w-5" />
                   </div>
                   <h3 className="font-display text-xl font-bold text-foreground">Our Mission</h3>
@@ -216,9 +257,9 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-accent/30 bg-accent/5 p-8 relative overflow-hidden shadow-lg">
+              <div className="rounded-3xl border border-border/90 bg-background p-8 relative overflow-hidden shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-slate-950 font-bold">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold">
                     <TrendingUp className="h-5 w-5" />
                   </div>
                   <h3 className="font-display text-xl font-bold text-foreground">Our Vision</h3>
@@ -232,13 +273,86 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 3. Core Values Section */}
-      <section className="py-20 bg-background relative">
-        <Container>
+      {/* ── 3. Merged Full Interactive Portfolio & Case Studies Showcase ───────── */}
+      <section id="portfolio" className="py-24 lg:py-32 bg-background relative overflow-hidden scroll-mt-20">
+        {/* Subtle green gradient starting from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[750px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.09)_0%,hsl(161_93%_40%/0.02)_45%,transparent_70%)] pointer-events-none" />
+        <Container className="relative z-10">
+          <SectionHeading
+            badge="Proven Track Record"
+            title="Signature Portfolio & Case Studies"
+            description="Browse our real client campaigns delivering measurable ROI across NGO fundraising, performance marketing, web architecture, and branding."
+            align="center"
+          />
+
+          {/* Filter Bar */}
+          <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 pb-10 border-b border-border/70">
+            {/* Category Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={cn(
+                    'px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all',
+                    selectedCategory === cat
+                      ? 'bg-primary text-white shadow-sm font-bold'
+                      : 'bg-card text-muted-foreground border border-border/80 hover:border-primary/40 hover:text-foreground'
+                  )}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Live Search */}
+            <div className="relative w-full md:w-72">
+              <Search className="h-4 w-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search by client or industry..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-xl bg-card border border-border/90 pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Portfolio Grid */}
+          {filteredProjects.length === 0 ? (
+            <div className="text-center py-16 space-y-3">
+              <p className="text-muted-foreground text-base">No projects match your current search or category filter.</p>
+              <Button variant="outline" onClick={() => { setSelectedCategory('All'); setSearchQuery(''); }}>
+                Reset Search Filters
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+              {filteredProjects.map((project) => (
+                <PortfolioCard
+                  key={project.slug}
+                  title={project.title}
+                  slug={project.slug}
+                  clientName={project.clientName}
+                  coverImage={project.coverImage}
+                  industry={project.industry}
+                  results={project.results}
+                  tagline={project.tagline}
+                />
+              ))}
+            </div>
+          )}
+        </Container>
+      </section>
+
+      {/* ── 4. Core Operating Principles ────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-y border-border/70 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-[radial-gradient(ellipse_at_center,hsl(161_93%_40%/0.08)_0%,transparent_70%)] pointer-events-none" />
+        <Container className="relative z-10">
           <SectionHeading
             badge="What Guides Us"
             title="Our Core Operating Principles"
-            description="The values that shape every campaign we build, every line of ad copy we write, and how we interact with our clients."
+            description="The principles shaping every campaign we launch, every line of copy we write, and how we measure success."
             align="center"
           />
 
@@ -248,7 +362,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={idx}
-                  className="rounded-3xl border border-border/80 bg-card p-8 shadow-sm hover:shadow-lg transition-all duration-300 flex items-start gap-5"
+                  className="rounded-3xl border border-border/80 p-8 shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_10px_30px_-8px_rgba(0,0,0,0.12)] hover:border-primary/30 transition-all duration-300 flex items-start gap-5"
                 >
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <IconComp className="h-6 w-6" />
@@ -266,18 +380,19 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 4. Company Journey Timeline */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
+      {/* ── 5. Company Growth Timeline (Light Mode) ────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-background relative overflow-hidden">
         <Container size="sm">
           <SectionHeading
             badge="Our Growth Journey"
             title="Milestones That Defined Us"
+            description="From a NCR performance marketing startup to India's premier dual-impact agency."
             align="center"
-            dark
           />
 
-          <div className="mt-12 space-y-8 relative">
-            <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-accent to-primary" />
+          <div className="mt-14 space-y-10 relative">
+            {/* Vertical primary green accent line */}
+            <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-primary/30" />
 
             {companyMilestones.map((m, idx) => (
               <motion.div
@@ -288,14 +403,14 @@ export default function AboutPage() {
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
                 className="relative pl-14"
               >
-                <div className="absolute left-4 top-1 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-slate-950 bg-accent" />
-                <span className="text-xs font-bold uppercase tracking-wider text-accent">
+                <div className="absolute left-4 top-1.5 h-4 w-4 -translate-x-1/2 rounded-full border-4 border-background bg-primary shadow-sm" />
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">
                   {m.year}
                 </span>
-                <h3 className="font-display text-xl font-bold text-white mt-0.5">
+                <h3 className="font-display text-xl font-bold text-foreground mt-0.5">
                   {m.title}
                 </h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
                   {m.description}
                 </p>
               </motion.div>
@@ -304,8 +419,8 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 5. Team Leadership Preview */}
-      <section className="py-20 bg-background relative">
+      {/* ── 6. Team Leadership Preview ─────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-card border-t border-border/70 relative ">
         <Container>
           <SectionHeading
             badge="Meet The Minds"
@@ -318,7 +433,7 @@ export default function AboutPage() {
             {teamMembers.map((member, idx) => (
               <div
                 key={idx}
-                className="group rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group rounded-3xl border border-border/80 bg-background overflow-hidden shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-lg transition-all duration-300"
               >
                 <div className="relative h-64 overflow-hidden bg-muted">
                   <img
@@ -326,7 +441,7 @@ export default function AboutPage() {
                     alt={member.name}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                     <div className="flex gap-2">
                       {member.linkedin && (
                         <a
@@ -356,7 +471,7 @@ export default function AboutPage() {
                   <h3 className="font-display text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
-                  <span className="text-xs font-medium text-accent uppercase tracking-wider block mt-0.5">
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider block mt-0.5">
                     {member.role}
                   </span>
                   <p className="text-xs text-muted-foreground mt-3 leading-relaxed line-clamp-3">
@@ -369,13 +484,13 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 6. Office Gallery & Culture */}
-      <section className="py-20 bg-card border-t border-border/60 relative">
+      {/* ── 7. Office Gallery & Culture ────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-background relative">
         <Container>
           <SectionHeading
             badge="Agency Culture"
             title="Where Strategy Meets Creativity"
-            description="A glimpse inside our Noida headquarters and team environment built for innovation and performance."
+            description="A glimpse inside our Noida headquarters and team environment built for performance."
             align="center"
           />
 
@@ -383,16 +498,16 @@ export default function AboutPage() {
             {officeImages.map((img, idx) => (
               <div
                 key={idx}
-                className="group relative h-64 rounded-3xl overflow-hidden border border-border/80 bg-muted shadow-md"
+                className="group relative h-64 rounded-3xl overflow-hidden border border-border/80 bg-card shadow-[0_6px_40px_-12px_rgba(0,0,0,0.1),0_2px_8px_-2px_rgba(0,0,0,0.04)]"
               >
                 <img
                   src={img.url}
                   alt={img.caption}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <span className="text-xs font-semibold text-white/90">{img.caption}</span>
+                  <span className="text-xs font-semibold text-white">{img.caption}</span>
                 </div>
               </div>
             ))}
@@ -400,7 +515,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 7. Final Call to Action */}
+      {/* ── 8. Final Call to Action ───────────────────────────────────────────── */}
       <CTA
         title="Ready to Partner with India’s Premier Digital Growth Agency?"
         subtitle="Schedule a free strategy call to discuss your NGO fundraising goals or business performance ad targets."

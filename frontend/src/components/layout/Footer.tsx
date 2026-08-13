@@ -188,7 +188,7 @@ export const Footer: FC = () => {
             <ul className="space-y-2.5 text-sm text-white/45">
               {[
                 { label: 'About Vigyapana', href: '/about' },
-                { label: 'Portfolio & Work', href: '/portfolio' },
+                { label: 'Portfolio & Work', href: '/about#portfolio' },
                 { label: 'Case Studies', href: '/case-studies' },
                 { label: 'Articles & Insights', href: '/blog' },
                 { label: 'Contact Us', href: '/contact' },
